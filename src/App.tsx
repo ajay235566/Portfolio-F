@@ -1,0 +1,564 @@
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { 
+  Github, 
+  Linkedin, 
+  Mail, 
+  Phone, 
+  ExternalLink, 
+  Code2, 
+  BarChart3, 
+  Cpu, 
+  Globe, 
+  ChevronRight, 
+  Download,
+  Award,
+  BookOpen,
+  Briefcase,
+  Terminal,
+  Zap,
+  CheckCircle2
+} from 'lucide-react';
+import { cn } from './lib/utils';
+
+// --- Data ---
+
+const SKILLS = [
+  { name: 'Google Analytics (GA4)', category: 'Analytics', icon: BarChart3, color: 'text-brand-yellow' },
+  { name: 'Google Tag Manager', category: 'Tracking', icon: Zap, color: 'text-brand-blue' },
+  { name: 'Google Looker Studio', category: 'Visualization', icon: BarChart3, color: 'text-brand-green' },
+  { name: 'Consent Mode & Enhanced Tracking', category: 'Compliance', icon: CheckCircle2, color: 'text-brand-blue' },
+  { name: 'Offline Conversions & Customer Match', category: 'Advanced Ads', icon: Globe, color: 'text-brand-red' },
+  { name: 'Google Tag Gateway', category: 'Infrastructure', icon: Cpu, color: 'text-white' },
+  { name: 'Cost Data Import & Audiences', category: 'Strategy', icon: Terminal, color: 'text-brand-yellow' },
+  { name: 'GTM Templates & Automation', category: 'Development', icon: Code2, color: 'text-brand-red' },
+];
+
+const CMS_EXPERTISE = [
+  'Shopify', 'WordPress', 'Wix', 'Squarespace', 'Magento', 'Webflow', 'GoDaddy', 'BigCommerce',
+  'HubSpot', 'Ghost', 'Strapi', 'Contentful', 'Drupal', 'Joomla', 'PrestaShop', 'Weebly'
+];
+
+const EXPERIENCE = [
+  {
+    company: 'Cognizant',
+    role: 'Subject Matter Expert',
+    description: 'Consulting for Google client projects (GCARE & GTECH). Specialized in architecting complex conversion tracking, GTM, and GA4 ecosystems.',
+    highlights: [
+      'Architected end-to-end conversion tracking strategies for high-value Google Ads clients.',
+      'Optimized data collection workflows through advanced GTM configurations and server-side tagging.',
+      'Implemented custom HTML for AJAX forms and iframe postMessage listeners.',
+      'Resolved complex tracking issues and data discrepancies for enterprise-level accounts.',
+      'Led technical training sessions on measurement best practices and advanced troubleshooting.'
+    ]
+  },
+  {
+    company: 'ZoomRX',
+    role: 'Business Analyst Associate',
+    description: 'Analyzed market trends and drug performance data for US-based pharmaceutical stakeholders.',
+    highlights: [
+      'Utilized Excel and Tableau for advanced data visualization and strategic reporting.',
+      'Delivered comprehensive presentations to key stakeholders and clients.',
+      'Summarized key data trends and provided actionable recommendations for market optimization.'
+    ]
+  }
+];
+
+const PROJECTS = [
+  {
+    title: 'Task Tracker',
+    description: 'A comprehensive task management application built for high-performance tracking and productivity.',
+    impact: 'Streamlined daily operations and improved task completion visibility.',
+    tags: ['React', 'Productivity', 'Web App'],
+    link: 'https://task-tracker-phi-umber.vercel.app/'
+  },
+  {
+    title: 'GTM Automation Tool',
+    description: 'Advanced automation tool for Google Tag Manager to streamline measurement implementation.',
+    impact: 'Reduced manual configuration time and minimized human error in tracking.',
+    tags: ['Automation', 'GTM', 'Efficiency'],
+    link: 'https://gtm-automation-omega.vercel.app/'
+  },
+  {
+    title: 'OneDoc - CaseNote Automator',
+    description: 'A productivity tool for Technical Solutions Team (GTech) that standardizes and automates case note documentation.',
+    impact: 'Reduced documentation time by 50-60%, saving ~60 mins per agent daily.',
+    tags: ['Automation', 'Productivity', 'Internal Tool'],
+    link: '#'
+  }
+];
+
+const EDUCATION = []; // Removed education data
+
+// --- Components ---
+
+const SectionHeading = ({ children, subtitle }: { children: React.ReactNode, subtitle?: string }) => (
+  <div className="mb-12">
+    <motion.h2 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="text-4xl md:text-5xl font-display font-bold mb-4"
+    >
+      {children}
+    </motion.h2>
+    {subtitle && (
+      <motion.p 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.1 }}
+        className="text-white/50 font-mono text-sm uppercase tracking-widest"
+      >
+        {subtitle}
+      </motion.p>
+    )}
+  </div>
+);
+
+export default function App() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="relative min-h-screen overflow-x-hidden">
+      {/* Background Elements */}
+      <div className="fixed inset-0 grid-pattern pointer-events-none opacity-20" />
+      <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-blue/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-brand-red/10 blur-[120px] rounded-full" />
+      </div>
+
+      {/* Navigation */}
+      <nav className={cn(
+        "fixed top-0 w-full z-50 transition-all duration-300 px-6 py-4",
+        scrolled ? "glass py-3" : "bg-transparent"
+      )}>
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="font-display font-bold text-xl tracking-tighter"
+          >
+            AJAY<span className="text-brand-blue">.</span>KUMAR
+          </motion.div>
+          
+          <div className="hidden md:flex gap-8 text-sm font-medium text-white/70">
+            {['About', 'Experience', 'Skills', 'Projects', 'Freelance', 'Blog'].map((item) => (
+              <a 
+                key={item} 
+                href={item === 'Blog' ? '#' : `#${item.toLowerCase()}`}
+                className="hover:text-white transition-colors"
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+
+          <motion.a 
+            href="mailto:ajayignited@gmail.com"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-5 py-2 rounded-full bg-white text-black text-sm font-bold flex items-center gap-2"
+          >
+            Hire Me <ChevronRight size={16} />
+          </motion.a>
+        </div>
+      </nav>
+
+      <main className="relative z-10">
+        {/* Hero Section */}
+        <section className="min-h-screen flex flex-col justify-center px-6 pt-20">
+          <div className="max-w-7xl mx-auto w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              <div className="lg:col-span-8">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass mb-6">
+                    <ChevronRight size={14} className="text-brand-green animate-pulse" />
+                    <span className="text-xs font-mono text-white/70 uppercase tracking-wider">Available for new opportunities</span>
+                  </div>
+                  
+                  <h1 className="text-6xl md:text-8xl font-display font-bold tracking-tight mb-8 leading-[0.9]">
+                    SUBJECT <br />
+                    <span className="text-gradient">MATTER</span> <br />
+                    EXPERT
+                  </h1>
+                  
+                  <p className="text-xl md:text-2xl text-white/60 max-w-2xl mb-10 leading-relaxed">
+                    I bridge the gap between complex data tracking and business growth. 
+                    Specializing in <span className="text-white">Google Ads</span>, <span className="text-white">Analytics</span>, and <span className="text-white">Automation</span>.
+                  </p>
+
+                  <div className="flex flex-wrap gap-4">
+                    <motion.button 
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="px-8 py-4 rounded-2xl bg-brand-blue text-white font-bold flex items-center gap-3 shadow-lg shadow-brand-blue/20"
+                    >
+                      View Projects <Zap size={18} />
+                    </motion.button>
+                    <motion.button 
+                      onClick={() => document.getElementById('freelance')?.scrollIntoView({ behavior: 'smooth' })}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="px-8 py-4 rounded-2xl glass text-white font-bold flex items-center gap-3"
+                    >
+                      Freelance & Training <ChevronRight size={18} />
+                    </motion.button>
+                  </div>
+                </motion.div>
+              </div>
+
+              <div className="lg:col-span-4 relative">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2, duration: 0.8 }}
+                  className="aspect-square glass rounded-3xl p-8 relative overflow-hidden group"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  <div className="h-full flex flex-col justify-between relative z-10">
+                    <div className="flex justify-between items-start">
+                      <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                        <Terminal size={24} className="text-brand-blue" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-[10px] font-mono text-white/40 uppercase">System Status</p>
+                        <p className="text-xs font-mono text-brand-green">OPERATIONAL</p>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="space-y-1">
+                        <p className="text-[10px] font-mono text-white/40 uppercase">Primary Expertise</p>
+                        <p className="text-lg font-display font-bold">Ads, GTM, GA4 & Looker Studio</p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-[10px] font-mono text-white/40 uppercase">Current Role</p>
+                        <p className="text-lg font-display font-bold">Subject Matter Expert</p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4 pt-4 border-t border-white/10">
+                      <a href="https://linkedin.com" className="text-white/40 hover:text-white transition-colors"><Linkedin size={20} /></a>
+                      <a href="mailto:ajayignited@gmail.com" className="text-white/40 hover:text-white transition-colors"><Mail size={20} /></a>
+                      <a href="tel:+919952917578" className="text-white/40 hover:text-white transition-colors"><Phone size={20} /></a>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* About Section */}
+        <section id="about" className="py-20 px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+              <SectionHeading subtitle="The Strategy">About Me</SectionHeading>
+              <div className="space-y-6 text-lg text-white/70 leading-relaxed">
+                <p>
+                  I am a results-driven <span className="text-white font-medium">Technical Consultant</span> specializing in advanced measurement strategy and implementation. 
+                  My expertise lies in architecting robust tracking solutions that bridge the gap between raw data and actionable business intelligence.
+                </p>
+                <p>
+                  Currently, I serve as a <span className="text-white font-medium">Subject Matter Expert</span> at Cognizant, where I consult for global clients on complex tracking ecosystems. 
+                  My technical depth extends across all major CMS platforms including <span className="text-white">Shopify, WordPress, Wix, Squarespace, and Magento</span>.
+                </p>
+                <p>
+                  I am also available for <span className="text-brand-blue font-medium">freelance consulting</span> and <span className="text-brand-green font-medium">technical training</span>, helping businesses and teams master the modern measurement stack.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Experience Section */}
+        <section id="experience" className="py-20 px-6 bg-white/[0.02]">
+          <div className="max-w-7xl mx-auto">
+            <SectionHeading subtitle="Career Path">Professional Experience</SectionHeading>
+            
+            <div className="space-y-12">
+              {EXPERIENCE.map((exp, idx) => (
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  className="relative pl-8 md:pl-12 border-l border-white/10"
+                >
+                  <div className="absolute left-[-8px] top-0 w-4 h-4 flex items-center justify-center bg-[#050505]">
+                    <ChevronRight size={16} className="text-brand-blue" />
+                  </div>
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div className="lg:col-span-4">
+                      <h3 className="text-2xl font-display font-bold">{exp.company}</h3>
+                      <p className="text-white/60 font-medium">{exp.role}</p>
+                    </div>
+                    <div className="lg:col-span-8">
+                      <p className="text-white/80 mb-6">{exp.description}</p>
+                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {exp.highlights.map((item, i) => (
+                          <li key={i} className="flex items-start gap-3 text-sm text-white/50">
+                            <ChevronRight size={14} className="text-brand-green shrink-0 mt-1" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section id="skills" className="py-20 px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+              <SectionHeading subtitle="Technical Stack">Expertise & Skills</SectionHeading>
+              <div className="flex gap-2 pb-12">
+                {['Analytics', 'Web Dev', 'Automation'].map(tag => (
+                  <span key={tag} className="px-3 py-1 rounded-full border border-white/10 text-[10px] font-mono uppercase tracking-wider text-white/40">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {SKILLS.map((skill, idx) => (
+                <motion.div
+                  key={idx}
+                  whileHover={{ y: -5 }}
+                  className="p-8 rounded-3xl glass group transition-all duration-300 hover:bg-white/10"
+                >
+                  <div className={cn("w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform", skill.color)}>
+                    <skill.icon size={24} />
+                  </div>
+                  <p className="text-xs font-mono text-white/40 uppercase mb-2">{skill.category}</p>
+                  <h3 className="text-xl font-display font-bold">{skill.name}</h3>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Freelance & Training Section */}
+        <section id="freelance" className="py-20 px-6 bg-brand-blue/[0.03]">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <SectionHeading subtitle="Services">Freelance & Training</SectionHeading>
+                <div className="space-y-8">
+                  <div className="glass p-8 rounded-3xl border-brand-blue/20">
+                    <h3 className="text-2xl font-display font-bold mb-4 flex items-center gap-3">
+                      <Globe className="text-brand-blue" /> Precision Analytics
+                    </h3>
+                    <p className="text-white/60 mb-6">
+                      End-to-end measurement consulting for businesses. I specialize in setting up advanced tracking for complex ecosystems, ensuring data accuracy across all touchpoints.
+                    </p>
+                    <ul className="space-y-3 mb-8">
+                      {[
+                        'Custom GTM Implementation',
+                        'GA4 Migration & Audits',
+                        'Looker Studio Dashboarding',
+                        'Consent Mode Verification',
+                        'Server-Side Tagging'
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-center gap-3 text-sm text-white/70">
+                          <ChevronRight size={14} className="text-brand-blue" /> {item}
+                        </li>
+                      ))}
+                    </ul>
+                    <a 
+                      href="https://precison-analytics.vercel.app/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-brand-blue font-bold hover:underline"
+                    >
+                      Visit Precision Analytics <ExternalLink size={16} />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-8">
+                <div className="glass p-8 rounded-3xl border-brand-green/20">
+                  <h3 className="text-2xl font-display font-bold mb-4 flex items-center gap-3">
+                    <BookOpen className="text-brand-green" /> Technical Training
+                  </h3>
+                  <p className="text-white/60 mb-6">
+                    Empowering teams with the knowledge to manage their own measurement stack. I provide tailored training sessions for agencies and in-house teams.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      'Conversion Tracking',
+                      'GTM Mastery',
+                      'GA4 Deep Dive',
+                      'Looker Studio',
+                      'Enhanced Conversions',
+                      'Audience Building'
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-2 p-3 rounded-xl bg-white/5 text-xs font-medium">
+                        <CheckCircle2 size={14} className="text-brand-green" /> {item}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="glass p-8 rounded-3xl">
+                  <h4 className="text-sm font-mono text-white/40 uppercase mb-4 tracking-widest">CMS Ecosystem Expertise</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {CMS_EXPERTISE.map(cms => (
+                      <span key={cms} className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium text-white/70 hover:bg-brand-blue/20 hover:border-brand-blue/30 hover:text-white transition-all duration-300 cursor-default">
+                        {cms}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Projects Section */}
+        <section id="projects" className="py-20 px-6">
+          <div className="max-w-7xl mx-auto">
+            <SectionHeading subtitle="Featured Work">Key Projects</SectionHeading>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {PROJECTS.map((project, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="group relative p-1 rounded-[2rem] overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-brand-blue to-brand-red opacity-20 group-hover:opacity-40 transition-opacity" />
+                  <div className="relative h-full glass rounded-[1.9rem] p-10 flex flex-col">
+                    <div className="flex justify-between items-start mb-8">
+                      <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center">
+                        <Award size={28} className="text-brand-yellow" />
+                      </div>
+                      <div className="flex gap-2">
+                        {project.tags.map(tag => (
+                          <span key={tag} className="px-2 py-1 rounded-md bg-white/5 text-[10px] font-mono text-white/40 uppercase">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <h3 className="text-3xl font-display font-bold mb-4">{project.title}</h3>
+                    <p className="text-white/60 mb-8 flex-grow">{project.description}</p>
+                    
+                    <div className="p-4 rounded-2xl bg-brand-green/10 border border-brand-green/20 mb-8">
+                      <p className="text-xs font-mono text-brand-green uppercase mb-1">Impact</p>
+                      <p className="text-sm font-medium text-white/90">{project.impact}</p>
+                    </div>
+
+                    <a href={project.link} className="inline-flex items-center gap-2 text-sm font-bold group-hover:text-brand-blue transition-colors">
+                      View Case Study <ExternalLink size={16} />
+                    </a>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Hobbies Section */}
+        <section className="py-20 px-6">
+          <div className="max-w-7xl mx-auto">
+            <SectionHeading subtitle="Life Beyond Work">Interests</SectionHeading>
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="md:col-span-2 p-8 rounded-3xl glass flex flex-col justify-between group hover:bg-brand-blue/5 transition-colors">
+                <div className="w-12 h-12 rounded-2xl bg-brand-blue/10 flex items-center justify-center mb-6">
+                  <Globe size={24} className="text-brand-blue" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-display font-bold mb-2">Global Exploration</h3>
+                  <p className="text-white/50 text-sm">Traveling to new cultures and environments to gain fresh perspectives on problem-solving and life.</p>
+                </div>
+              </div>
+
+              <div className="p-8 rounded-3xl glass flex flex-col justify-between group hover:bg-brand-red/5 transition-colors">
+                <div className="w-12 h-12 rounded-2xl bg-brand-red/10 flex items-center justify-center mb-6">
+                  <BookOpen size={24} className="text-brand-red" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-display font-bold mb-2">Manga & Art</h3>
+                  <p className="text-white/50 text-xs">Appreciating visual storytelling and complex narratives through Japanese manga.</p>
+                </div>
+              </div>
+
+              <div className="p-8 rounded-3xl glass flex flex-col justify-between group hover:bg-brand-green/5 transition-colors">
+                <div className="w-12 h-12 rounded-2xl bg-brand-green/10 flex items-center justify-center mb-6">
+                  <Cpu size={24} className="text-brand-green" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-display font-bold mb-2">AI Agents</h3>
+                  <p className="text-white/50 text-xs">Experimenting with autonomous agents to automate complex cognitive tasks.</p>
+                </div>
+              </div>
+
+              <div className="md:col-span-2 lg:col-span-1 p-8 rounded-3xl glass flex flex-col justify-between group hover:bg-brand-yellow/5 transition-colors">
+                <div className="w-12 h-12 rounded-2xl bg-brand-yellow/10 flex items-center justify-center mb-6">
+                  <Zap size={24} className="text-brand-yellow" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-display font-bold mb-2">N8N Workflows</h3>
+                  <p className="text-white/50 text-xs">Building intricate automation pipelines to connect disparate data sources.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer / Contact */}
+        <footer className="py-20 px-6 border-t border-white/10">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-12">
+              <div className="text-center md:text-left">
+                <h2 className="text-4xl font-display font-bold mb-4">Let's build something <br /><span className="text-brand-blue">impactful</span>.</h2>
+              </div>
+              
+              <div className="flex flex-col items-center md:items-end gap-6">
+                <div className="flex gap-4">
+                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
+                    <Github size={24} className="group-hover:scale-110 transition-transform" />
+                  </a>
+                  <a href="mailto:ajayignited@gmail.com" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
+                    <Mail size={24} className="group-hover:scale-110 transition-transform" />
+                  </a>
+                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
+                    <Linkedin size={24} className="group-hover:scale-110 transition-transform" />
+                  </a>
+                  <a href="tel:+919952917578" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
+                    <Phone size={24} className="group-hover:scale-110 transition-transform" />
+                  </a>
+                </div>
+                <p className="text-xs text-white/20 font-mono">© 2024 AJAY KUMAR NALLAMOTHU. ALL RIGHTS RESERVED.</p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </div>
+  );
+}

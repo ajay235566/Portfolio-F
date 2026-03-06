@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-brand-blue: #4285F4;
+  --color-brand-red: #EA4335;
+  --color-brand-yellow: #FBBC05;
+  --color-brand-green: #34A853;
+}
+
+@layer base {
+  body {
+    @apply bg-[#050505] text-white font-sans selection:bg-brand-blue/30;
+  }
+}
+
+.glass {
+  @apply bg-white/5 backdrop-blur-lg border border-white/10;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white/80 to-white/40;
+}
+
+.grid-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.scanner-line {
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--color-brand-blue), transparent);
+  animation: scan 4s linear infinite;
+}
