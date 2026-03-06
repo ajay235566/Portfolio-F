@@ -49,6 +49,7 @@ const EXPERIENCE = [
       'Optimized data collection workflows through advanced GTM configurations and server-side tagging.',
       'Implemented custom HTML for AJAX forms and iframe postMessage listeners.',
       'Resolved complex tracking issues and data discrepancies for enterprise-level accounts.',
+      'Conducted Root Cause Analysis (RCA) for complex technical escalations to identify and resolve underlying tracking failures.',
       'Led technical training sessions on measurement best practices and advanced troubleshooting.'
     ]
   },
@@ -540,7 +541,7 @@ export default function App() {
               
               <div className="flex flex-col items-center md:items-end gap-6">
                 <div className="flex gap-4">
-                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
+                  <a href="https://github.com/ajay235566" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
                     <Github size={24} className="group-hover:scale-110 transition-transform" />
                   </a>
                   <a href="mailto:ajayignited@gmail.com" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
