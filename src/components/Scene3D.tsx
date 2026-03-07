@@ -24,8 +24,8 @@ useGLTF.preload('/69abdbebdea6e53d0c439ab4.glb');
 
 export const Scene3D = () => {
   return (
-    <div className="w-full h-full min-h-[400px] relative cursor-grab active:cursor-grabbing">
-      <Canvas camera={{ position: [0, 1, 5], fov: 45 }}>
+    <div className="w-full h-full relative cursor-grab active:cursor-grabbing" style={{ touchAction: 'pan-y' }}>
+      <Canvas camera={{ position: [0, 1, 5], fov: 45 }} style={{ touchAction: 'pan-y' }} resize={{ scroll: false }}>
         <ambientLight intensity={1.3} />
         <directionalLight position={[5, 5, 5]} intensity={1.6} />
         <pointLight position={[0, 5, 5]} intensity={1} />
@@ -35,10 +35,10 @@ export const Scene3D = () => {
           <CustomModel />
         </Suspense>
 
-        <OrbitControls enableZoom={true} makeDefault />
+        <OrbitControls enableZoom={false} enablePan={false} />
       </Canvas>
       <div className="absolute bottom-4 left-4 pointer-events-none">
-        <p className="text-[15px] font-mono text-white/20 uppercase tracking-widest">Ajay Kumar Nallamothu</p>
+        {/* <p className="text-[15px] font-mono text-white/20 uppercase tracking-widest">Ajay Kumar Nallamothu</p> */}
       </div>
     </div>
   );

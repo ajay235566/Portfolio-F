@@ -352,7 +352,7 @@ export default function App() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
-                  className="w-full relative min-h-[650px]"
+                  className="w-full relative h-[650px]"
                 >
                   <div className="w-full h-full absolute inset-0 z-10">
                     <Scene3D />
@@ -668,7 +668,7 @@ export default function App() {
           id="contact"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
           className="py-10 md:py-12 px-6"
         >
