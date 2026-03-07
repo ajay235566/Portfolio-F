@@ -21,8 +21,10 @@ import {
   CheckCircle2,
   Send,
   User,
-  MessageSquare
+  MessageSquare,
+  Box
 } from 'lucide-react';
+import { Scene3D } from './components/Scene3D';
 import { cn } from './lib/utils';
 
 // --- Data ---
@@ -350,32 +352,36 @@ export default function App() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
-                  className="glass rounded-3xl p-8 relative overflow-hidden group"
+                  className="glass rounded-3xl relative overflow-hidden group min-h-[400px]"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/20 to-transparent opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
                   
-                  <div className="flex flex-col gap-12 relative z-10">
-                    <div className="flex justify-between items-start">
-                      <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
-                        <Terminal size={24} className="text-brand-blue" />
+                  <div className="absolute top-8 left-8 z-20">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                        <Box size={20} className="text-brand-blue" />
                       </div>
-                      <div className="text-right">
-                        <p className="text-[10px] font-mono text-white/40 uppercase">System Status</p>
-                        <p className="text-xs font-mono text-brand-green">OPERATIONAL</p>
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      <div className="space-y-1">
-                        <p className="text-[10px] font-mono text-white/40 uppercase">Primary Expertise</p>
-                        <p className="text-lg font-display font-bold">Ads, GTM, GA4 & Looker Studio</p>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-[10px] font-mono text-white/40 uppercase">Current Role</p>
-                        <p className="text-lg font-display font-bold">Subject Matter Expert</p>
+                      <div>
+                        <p className="text-[10px] font-mono text-white/40 uppercase">Interactive</p>
+                        <p className="text-xs font-mono text-brand-green">3D VISUALIZATION</p>
                       </div>
                     </div>
+                  </div>
 
+                  <div className="absolute top-8 right-8 z-20 text-right">
+                    <p className="text-[10px] font-mono text-white/40 uppercase">System Status</p>
+                    <p className="text-xs font-mono text-brand-green">OPERATIONAL</p>
+                  </div>
+
+                  <div className="w-full h-full absolute inset-0 z-10">
+                    <Scene3D />
+                  </div>
+
+                  <div className="absolute bottom-8 left-8 right-8 z-20">
+                    <div className="space-y-1">
+                      <p className="text-[10px] font-mono text-white/40 uppercase">Primary Expertise</p>
+                      <p className="text-lg font-display font-bold">Ads, GTM, GA4 & Looker Studio</p>
+                    </div>
                   </div>
                 </motion.div>
               </div>
