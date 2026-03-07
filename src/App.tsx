@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'motion/react';
 import { 
   Github, 
   Linkedin, 
@@ -11,13 +11,17 @@ import {
   Cpu, 
   Globe, 
   ChevronRight, 
+  ArrowUpRight,
   Download,
   Award,
   BookOpen,
   Briefcase,
   Terminal,
   Zap,
-  CheckCircle2
+  CheckCircle2,
+  Send,
+  User,
+  MessageSquare
 } from 'lucide-react';
 import { cn } from './lib/utils';
 
@@ -94,28 +98,134 @@ const EDUCATION = []; // Removed education data
 // --- Components ---
 
 const SectionHeading = ({ children, subtitle }: { children: React.ReactNode, subtitle?: string }) => (
-  <div className="mb-12">
-    <motion.h2 
-      initial={{ opacity: 0, y: 20 }}
+  <motion.div 
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-100px" }}
+    transition={{ duration: 0.8, ease: "easeOut" }}
+    className="mb-12"
+  >
+    <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
+      {children}
+    </h2>
+    {subtitle && (
+      <p className="text-white/50 font-mono text-sm uppercase tracking-widest">
+        {subtitle}
+      </p>
+    )}
+  </motion.div>
+);
+
+const ParallaxBackground = () => {
+  const { scrollYProgress } = useScroll();
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 45]);
+
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      <motion.div 
+        style={{ y: y1, rotate }}
+        className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-blue/10 blur-[120px] rounded-full" 
+      />
+      <motion.div 
+        style={{ y: y2, rotate: -rotate }}
+        className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-red/10 blur-[120px] rounded-full" 
+      />
+      <div className="absolute inset-0 grid-pattern opacity-20" />
+    </div>
+  );
+};
+
+const ContactForm = () => {
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('sending');
+    setTimeout(() => setStatus('sent'), 1500);
+  };
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="text-4xl md:text-5xl font-display font-bold mb-4"
+      className="glass p-8 md:p-12 rounded-[2.5rem] border-white/10 relative overflow-hidden"
     >
-      {children}
-    </motion.h2>
-    {subtitle && (
-      <motion.p 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.1 }}
-        className="text-white/50 font-mono text-sm uppercase tracking-widest"
-      >
-        {subtitle}
-      </motion.p>
-    )}
-  </div>
-);
+      <div className="absolute top-0 right-0 p-8 opacity-5">
+        <Send size={120} className="rotate-12" />
+      </div>
+      
+      <div className="relative z-10">
+        <h3 className="text-3xl font-display font-bold mb-2">Get in Touch</h3>
+        <p className="text-white/50 mb-8">Have a project in mind? Let's discuss how we can work together.</p>
+        
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-xs font-mono text-white/40 uppercase ml-1">Name</label>
+              <div className="relative">
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
+                <input 
+                  required
+                  type="text" 
+                  placeholder="John Doe"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-white placeholder:text-white/20"
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-xs font-mono text-white/40 uppercase ml-1">Email</label>
+              <div className="relative">
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
+                <input 
+                  required
+                  type="email" 
+                  placeholder="john@example.com"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-white placeholder:text-white/20"
+                />
+              </div>
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <label className="text-xs font-mono text-white/40 uppercase ml-1">Message</label>
+            <div className="relative">
+              <MessageSquare className="absolute left-4 top-6 text-white/20" size={18} />
+              <textarea 
+                required
+                rows={4}
+                placeholder="help me with your queries..."
+                className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-white placeholder:text-white/20 resize-none"
+              />
+            </div>
+          </div>
+          
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            disabled={status !== 'idle'}
+            className={cn(
+              "w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all duration-300",
+              status === 'sent' ? "bg-brand-green text-white" : "bg-brand-blue text-white shadow-lg shadow-brand-blue/20"
+            )}
+          >
+            {status === 'idle' && (
+              <>Send Message <Send size={18} /></>
+            )}
+            {status === 'sending' && (
+              <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            )}
+            {status === 'sent' && (
+              <>Message Sent! <CheckCircle2 size={18} /></>
+            )}
+          </motion.button>
+        </form>
+      </div>
+    </motion.div>
+  );
+};
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
@@ -128,12 +238,7 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden">
-      {/* Background Elements */}
-      <div className="fixed inset-0 grid-pattern pointer-events-none opacity-20" />
-      <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-blue/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-brand-red/10 blur-[120px] rounded-full" />
-      </div>
+      <ParallaxBackground />
 
       {/* Navigation */}
       <nav className={cn(
@@ -184,7 +289,7 @@ export default function App() {
                   transition={{ duration: 0.6 }}
                 >
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass mb-6">
-                    <ChevronRight size={14} className="text-brand-green animate-pulse" />
+                    <ArrowUpRight size={14} className="text-brand-green animate-pulse" />
                     <span className="text-xs font-mono text-white/70 uppercase tracking-wider">Available for new opportunities</span>
                   </div>
                   
@@ -214,7 +319,7 @@ export default function App() {
                       whileTap={{ scale: 0.98 }}
                       className="px-8 py-4 rounded-2xl glass text-white font-bold flex items-center gap-3"
                     >
-                      Freelance & Training <ChevronRight size={18} />
+                      Freelance & Training <ArrowUpRight size={18} />
                     </motion.button>
                   </div>
                 </motion.div>
@@ -264,7 +369,14 @@ export default function App() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="py-20 px-6">
+        <motion.section 
+          id="about" 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="py-20 px-6"
+        >
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
               <SectionHeading subtitle="The Strategy">About Me</SectionHeading>
@@ -283,10 +395,17 @@ export default function App() {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Experience Section */}
-        <section id="experience" className="py-20 px-6 bg-white/[0.02]">
+        <motion.section 
+          id="experience" 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="py-20 px-6 bg-white/[0.02]"
+        >
           <div className="max-w-7xl mx-auto">
             <SectionHeading subtitle="Career Path">Professional Experience</SectionHeading>
             
@@ -324,10 +443,17 @@ export default function App() {
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Skills Section */}
-        <section id="skills" className="py-20 px-6">
+        <motion.section 
+          id="skills" 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="py-20 px-6"
+        >
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
               <SectionHeading subtitle="Technical Stack">Expertise & Skills</SectionHeading>
@@ -356,10 +482,17 @@ export default function App() {
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Freelance & Training Section */}
-        <section id="freelance" className="py-20 px-6 bg-brand-blue/[0.03]">
+        <motion.section 
+          id="freelance" 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="py-20 px-6 bg-brand-blue/[0.03]"
+        >
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
@@ -434,10 +567,17 @@ export default function App() {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Projects Section */}
-        <section id="projects" className="py-20 px-6">
+        <motion.section 
+          id="projects" 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="py-20 px-6"
+        >
           <div className="max-w-7xl mx-auto">
             <SectionHeading subtitle="Featured Work">Key Projects</SectionHeading>
             
@@ -481,10 +621,16 @@ export default function App() {
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Hobbies Section */}
-        <section className="py-20 px-6">
+        <motion.section 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="py-20 px-6"
+        >
           <div className="max-w-7xl mx-auto">
             <SectionHeading subtitle="Life Beyond Work">Interests</SectionHeading>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -529,7 +675,22 @@ export default function App() {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
+
+        {/* Contact Section */}
+        <motion.section 
+          id="contact" 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="py-20 px-6"
+        >
+          <div className="max-w-4xl mx-auto">
+            <SectionHeading subtitle="Get in Touch">Contact</SectionHeading>
+            <ContactForm />
+          </div>
+        </motion.section>
 
         {/* Footer / Contact */}
         <footer className="py-20 px-6 border-t border-white/10">
