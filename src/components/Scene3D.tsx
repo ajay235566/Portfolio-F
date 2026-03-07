@@ -15,7 +15,7 @@ const CustomModel = () => {
 
   return (
     <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-      <primitive ref={groupRef} object={scene} scale={1.8} position={[0, -1.9, 0]} />
+      <primitive ref={groupRef} object={scene} scale={1.8} position={[0, -1.8, 0]} />
     </Float>
   );
 };
