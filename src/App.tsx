@@ -350,11 +350,11 @@ export default function App() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
-                  className="aspect-square glass rounded-3xl p-8 relative overflow-hidden group"
+                  className="glass rounded-3xl p-8 relative overflow-hidden group"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
-                  <div className="h-full flex flex-col justify-between relative z-10">
+                  <div className="flex flex-col gap-12 relative z-10">
                     <div className="flex justify-between items-start">
                       <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
                         <Terminal size={24} className="text-brand-blue" />
