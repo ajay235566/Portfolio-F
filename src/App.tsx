@@ -270,7 +270,7 @@ export default function App() {
 
           <div className="flex items-center gap-4">
             <motion.a
-              href="#"
+              href="/AjayKumarNallamothu.pdf"
               download
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -335,7 +335,7 @@ export default function App() {
                       Freelance & Training <ArrowUpRight size={18} />
                     </motion.button>
                     <motion.a
-                      href="#"
+                      href="/AjayKumarNallamothu.pdf"
                       download
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
