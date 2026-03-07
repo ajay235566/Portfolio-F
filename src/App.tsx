@@ -103,7 +103,7 @@ const SectionHeading = ({ children, subtitle }: { children: React.ReactNode, sub
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-100px" }}
     transition={{ duration: 0.8, ease: "easeOut" }}
-    className="mb-12"
+    className="mb-6 md:mb-8"
   >
     <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
       {children}
@@ -266,14 +266,25 @@ export default function App() {
             ))}
           </div>
 
-          <motion.a 
-            href="mailto:ajayignited@gmail.com"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-5 py-2 rounded-full bg-white text-black text-sm font-bold flex items-center gap-2"
-          >
-            Hire Me <ChevronRight size={16} />
-          </motion.a>
+          <div className="flex items-center gap-4">
+            <motion.a 
+              href="#"
+              download
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="hidden sm:flex items-center gap-2 text-sm font-bold text-white/70 hover:text-white transition-colors"
+            >
+              Resume <Download size={16} />
+            </motion.a>
+            <motion.a 
+              href="mailto:ajayignited@gmail.com"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-5 py-2 rounded-full bg-white text-black text-sm font-bold flex items-center gap-2"
+            >
+              Hire Me <ChevronRight size={16} />
+            </motion.a>
+          </div>
         </div>
       </nav>
 
@@ -293,10 +304,10 @@ export default function App() {
                     <span className="text-xs font-mono text-white/70 uppercase tracking-wider">Available for new opportunities</span>
                   </div>
                   
-                  <h1 className="text-6xl md:text-8xl font-display font-bold tracking-tight mb-8 leading-[0.9]">
-                    SUBJECT <br />
-                    <span className="text-gradient">MATTER</span> <br />
-                    EXPERT
+                  <h1 className="text-5xl md:text-8xl font-display font-bold tracking-tight mb-8 leading-[1.1] md:leading-[0.9] flex flex-col">
+                    <span>SUBJECT</span>
+                    <span className="text-gradient">MATTER</span>
+                    <span>EXPERT</span>
                   </h1>
                   
                   <p className="text-xl md:text-2xl text-white/60 max-w-2xl mb-10 leading-relaxed">
@@ -321,6 +332,15 @@ export default function App() {
                     >
                       Freelance & Training <ArrowUpRight size={18} />
                     </motion.button>
+                    <motion.a 
+                      href="#"
+                      download
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="px-8 py-4 rounded-2xl border border-brand-green/30 bg-brand-green/5 text-brand-green font-bold flex items-center gap-3 hover:bg-brand-green/10 transition-colors"
+                    >
+                      Download Resume <Download size={18} />
+                    </motion.a>
                   </div>
                 </motion.div>
               </div>
@@ -356,11 +376,6 @@ export default function App() {
                       </div>
                     </div>
 
-                    <div className="flex gap-4 pt-4 border-t border-white/10">
-                      <a href="https://linkedin.com" className="text-white/40 hover:text-white transition-colors"><Linkedin size={20} /></a>
-                      <a href="mailto:ajayignited@gmail.com" className="text-white/40 hover:text-white transition-colors"><Mail size={20} /></a>
-                      <a href="tel:+919952917578" className="text-white/40 hover:text-white transition-colors"><Phone size={20} /></a>
-                    </div>
                   </div>
                 </motion.div>
               </div>
@@ -375,10 +390,10 @@ export default function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="py-20 px-6"
+          className="py-10 md:py-12 px-6"
         >
           <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
               <SectionHeading subtitle="The Strategy">About Me</SectionHeading>
               <div className="space-y-6 text-lg text-white/70 leading-relaxed">
                 <p>
@@ -404,7 +419,7 @@ export default function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="py-20 px-6 bg-white/[0.02]"
+          className="py-10 md:py-12 px-6 bg-white/[0.02]"
         >
           <div className="max-w-7xl mx-auto">
             <SectionHeading subtitle="Career Path">Professional Experience</SectionHeading>
@@ -452,19 +467,10 @@ export default function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="py-20 px-6"
+          className="py-10 md:py-12 px-6"
         >
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-              <SectionHeading subtitle="Technical Stack">Expertise & Skills</SectionHeading>
-              <div className="flex gap-2 pb-12">
-                {['Analytics', 'Web Dev', 'Automation'].map(tag => (
-                  <span key={tag} className="px-3 py-1 rounded-full border border-white/10 text-[10px] font-mono uppercase tracking-wider text-white/40">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
+            <SectionHeading subtitle="Technical Stack">Expertise & Skills</SectionHeading>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {SKILLS.map((skill, idx) => (
@@ -491,7 +497,7 @@ export default function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="py-20 px-6 bg-brand-blue/[0.03]"
+          className="py-10 md:py-12 px-6 bg-brand-blue/[0.03]"
         >
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -576,7 +582,7 @@ export default function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="py-20 px-6"
+          className="py-10 md:py-12 px-6"
         >
           <div className="max-w-7xl mx-auto">
             <SectionHeading subtitle="Featured Work">Key Projects</SectionHeading>
@@ -629,7 +635,7 @@ export default function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="py-20 px-6"
+          className="py-10 md:py-12 px-6"
         >
           <div className="max-w-7xl mx-auto">
             <SectionHeading subtitle="Life Beyond Work">Interests</SectionHeading>
@@ -684,7 +690,7 @@ export default function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="py-20 px-6"
+          className="py-10 md:py-12 px-6"
         >
           <div className="max-w-4xl mx-auto">
             <SectionHeading subtitle="Get in Touch">Contact</SectionHeading>
@@ -693,7 +699,7 @@ export default function App() {
         </motion.section>
 
         {/* Footer / Contact */}
-        <footer className="py-20 px-6 border-t border-white/10">
+        <footer className="py-10 md:py-12 px-6 border-t border-white/10">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-center gap-12">
               <div className="text-center md:text-left">
@@ -715,7 +721,7 @@ export default function App() {
                     <Phone size={24} className="group-hover:scale-110 transition-transform" />
                   </a>
                 </div>
-                <p className="text-xs text-white/20 font-mono">© 2024 AJAY KUMAR NALLAMOTHU. ALL RIGHTS RESERVED.</p>
+                <p className="text-xs text-white/20 font-mono">© 2025 AJAY KUMAR NALLAMOTHU. ALL RIGHTS RESERVED.</p>
               </div>
             </div>
           </div>
