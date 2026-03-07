@@ -295,7 +295,7 @@ export default function App() {
         <section className="min-h-screen flex flex-col justify-center px-6 pt-20">
           <div className="max-w-7xl mx-auto w-full">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              <div className="lg:col-span-8">
+              <div className="lg:col-span-7">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -347,41 +347,15 @@ export default function App() {
                 </motion.div>
               </div>
 
-              <div className="lg:col-span-4 relative">
+              <div className="lg:col-span-5 relative flex items-center justify-center">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
-                  className="glass rounded-3xl relative overflow-hidden group min-h-[400px]"
+                  className="w-full relative min-h-[650px]"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/20 to-transparent opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
-                  
-                  <div className="absolute top-8 left-8 z-20">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                        <Box size={20} className="text-brand-blue" />
-                      </div>
-                      <div>
-                        <p className="text-[10px] font-mono text-white/40 uppercase">Interactive</p>
-                        <p className="text-xs font-mono text-brand-green">3D VISUALIZATION</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="absolute top-8 right-8 z-20 text-right">
-                    <p className="text-[10px] font-mono text-white/40 uppercase">System Status</p>
-                    <p className="text-xs font-mono text-brand-green">OPERATIONAL</p>
-                  </div>
-
                   <div className="w-full h-full absolute inset-0 z-10">
                     <Scene3D />
-                  </div>
-
-                  <div className="absolute bottom-8 left-8 right-8 z-20">
-                    <div className="space-y-1">
-                      <p className="text-[10px] font-mono text-white/40 uppercase">Primary Expertise</p>
-                      <p className="text-lg font-display font-bold">Ads, GTM, GA4 & Looker Studio</p>
-                    </div>
                   </div>
                 </motion.div>
               </div>
