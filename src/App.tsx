@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'motion/react';
-import { 
-  Github, 
-  Linkedin, 
-  Mail, 
-  Phone, 
-  ExternalLink, 
-  Code2, 
-  BarChart3, 
-  Cpu, 
-  Globe, 
-  ChevronRight, 
+import {
+  Github,
+  Linkedin,
+  Mail,
+  Phone,
+  ExternalLink,
+  Code2,
+  BarChart3,
+  Cpu,
+  Globe,
+  ChevronRight,
   ArrowUpRight,
   Download,
   Award,
@@ -100,7 +100,7 @@ const EDUCATION = []; // Removed education data
 // --- Components ---
 
 const SectionHeading = ({ children, subtitle }: { children: React.ReactNode, subtitle?: string }) => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-100px" }}
@@ -126,13 +126,13 @@ const ParallaxBackground = () => {
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      <motion.div 
+      <motion.div
         style={{ y: y1, rotate }}
-        className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-blue/10 blur-[120px] rounded-full" 
+        className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-blue/10 blur-[120px] rounded-full"
       />
-      <motion.div 
+      <motion.div
         style={{ y: y2, rotate: -rotate }}
-        className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-red/10 blur-[120px] rounded-full" 
+        className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-red/10 blur-[120px] rounded-full"
       />
       <div className="absolute inset-0 grid-pattern opacity-20" />
     </div>
@@ -149,7 +149,7 @@ const ContactForm = () => {
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -158,20 +158,20 @@ const ContactForm = () => {
       <div className="absolute top-0 right-0 p-8 opacity-5">
         <Send size={120} className="rotate-12" />
       </div>
-      
+
       <div className="relative z-10">
         <h3 className="text-3xl font-display font-bold mb-2">Get in Touch</h3>
         <p className="text-white/50 mb-8">Have a project in mind? Let's discuss how we can work together.</p>
-        
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="text-xs font-mono text-white/40 uppercase ml-1">Name</label>
               <div className="relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
-                <input 
+                <input
                   required
-                  type="text" 
+                  type="text"
                   placeholder="John Doe"
                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-white placeholder:text-white/20"
                 />
@@ -181,21 +181,21 @@ const ContactForm = () => {
               <label className="text-xs font-mono text-white/40 uppercase ml-1">Email</label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
-                <input 
+                <input
                   required
-                  type="email" 
+                  type="email"
                   placeholder="john@example.com"
                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-white placeholder:text-white/20"
                 />
               </div>
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <label className="text-xs font-mono text-white/40 uppercase ml-1">Message</label>
             <div className="relative">
               <MessageSquare className="absolute left-4 top-6 text-white/20" size={18} />
-              <textarea 
+              <textarea
                 required
                 rows={4}
                 placeholder="help me with your queries..."
@@ -203,7 +203,7 @@ const ContactForm = () => {
               />
             </div>
           </div>
-          
+
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -248,18 +248,18 @@ export default function App() {
         scrolled ? "glass py-3" : "bg-transparent"
       )}>
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             className="font-display font-bold text-xl tracking-tighter"
           >
             AJAY<span className="text-brand-blue">.</span>KUMAR
           </motion.div>
-          
+
           <div className="hidden md:flex gap-8 text-sm font-medium text-white/70">
             {['About', 'Experience', 'Skills', 'Projects', 'Freelance', 'Blog'].map((item) => (
-              <a 
-                key={item} 
+              <a
+                key={item}
                 href={item === 'Blog' ? '#' : `#${item.toLowerCase()}`}
                 className="hover:text-white transition-colors"
               >
@@ -269,7 +269,7 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-4">
-            <motion.a 
+            <motion.a
               href="#"
               download
               whileHover={{ scale: 1.05 }}
@@ -278,7 +278,7 @@ export default function App() {
             >
               Resume <Download size={16} />
             </motion.a>
-            <motion.a 
+            <motion.a
               href="mailto:ajayignited@gmail.com"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -305,20 +305,20 @@ export default function App() {
                     <ArrowUpRight size={14} className="text-brand-green animate-pulse" />
                     <span className="text-xs font-mono text-white/70 uppercase tracking-wider">Available for new opportunities</span>
                   </div>
-                  
+
                   <h1 className="text-5xl md:text-8xl font-display font-bold tracking-tight mb-8 leading-[1.1] md:leading-[0.9] flex flex-col">
                     <span>SUBJECT</span>
                     <span className="text-gradient">MATTER</span>
                     <span>EXPERT</span>
                   </h1>
-                  
+
                   <p className="text-xl md:text-2xl text-white/60 max-w-2xl mb-10 leading-relaxed">
-                    I bridge the gap between complex data tracking and business growth. 
+                    I bridge the gap between complex data tracking and business growth.
                     Specializing in <span className="text-white">Google Ads</span>, <span className="text-white">Analytics</span>, and <span className="text-white">Automation</span>.
                   </p>
 
                   <div className="flex flex-wrap gap-4">
-                    <motion.button 
+                    <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
@@ -326,7 +326,7 @@ export default function App() {
                     >
                       View Projects <Zap size={18} />
                     </motion.button>
-                    <motion.button 
+                    <motion.button
                       onClick={() => document.getElementById('freelance')?.scrollIntoView({ behavior: 'smooth' })}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -334,7 +334,7 @@ export default function App() {
                     >
                       Freelance & Training <ArrowUpRight size={18} />
                     </motion.button>
-                    <motion.a 
+                    <motion.a
                       href="#"
                       download
                       whileHover={{ scale: 1.02 }}
@@ -364,8 +364,8 @@ export default function App() {
         </section>
 
         {/* About Section */}
-        <motion.section 
-          id="about" 
+        <motion.section
+          id="about"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -377,11 +377,11 @@ export default function App() {
               <SectionHeading subtitle="The Strategy">About Me</SectionHeading>
               <div className="space-y-6 text-lg text-white/70 leading-relaxed">
                 <p>
-                  I am a results-driven <span className="text-white font-medium">Technical Consultant</span> specializing in advanced measurement strategy and implementation. 
+                  I am a results-driven <span className="text-white font-medium">Technical Consultant</span> specializing in advanced measurement strategy and implementation.
                   My expertise lies in architecting robust tracking solutions that bridge the gap between raw data and actionable business intelligence.
                 </p>
                 <p>
-                  Currently, I serve as a <span className="text-white font-medium">Subject Matter Expert</span> at Cognizant, where I consult for global clients on complex tracking ecosystems. 
+                  Currently, I serve as a <span className="text-white font-medium">Subject Matter Expert</span> at Cognizant, where I consult for global clients on complex tracking ecosystems.
                   My technical depth extends across all major CMS platforms including <span className="text-white">Shopify, WordPress, Wix, Squarespace, and Magento</span>.
                 </p>
                 <p>
@@ -393,8 +393,8 @@ export default function App() {
         </motion.section>
 
         {/* Experience Section */}
-        <motion.section 
-          id="experience" 
+        <motion.section
+          id="experience"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -403,10 +403,10 @@ export default function App() {
         >
           <div className="max-w-7xl mx-auto">
             <SectionHeading subtitle="Career Path">Professional Experience</SectionHeading>
-            
+
             <div className="space-y-12">
               {EXPERIENCE.map((exp, idx) => (
-                <motion.div 
+                <motion.div
                   key={idx}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -416,7 +416,7 @@ export default function App() {
                   <div className="absolute left-[-8px] top-0 w-4 h-4 flex items-center justify-center bg-[#050505]">
                     <ChevronRight size={16} className="text-brand-blue" />
                   </div>
-                  
+
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div className="lg:col-span-4">
                       <h3 className="text-2xl font-display font-bold">{exp.company}</h3>
@@ -441,8 +441,8 @@ export default function App() {
         </motion.section>
 
         {/* Skills Section */}
-        <motion.section 
-          id="skills" 
+        <motion.section
+          id="skills"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -471,8 +471,8 @@ export default function App() {
         </motion.section>
 
         {/* Freelance & Training Section */}
-        <motion.section 
-          id="freelance" 
+        <motion.section
+          id="freelance"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -504,9 +504,9 @@ export default function App() {
                         </li>
                       ))}
                     </ul>
-                    <a 
-                      href="https://precison-analytics.vercel.app/" 
-                      target="_blank" 
+                    <a
+                      href="https://precison-analytics.vercel.app/"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-brand-blue font-bold hover:underline"
                     >
@@ -539,7 +539,7 @@ export default function App() {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="glass p-8 rounded-3xl">
                   <h4 className="text-sm font-mono text-white/40 uppercase mb-4 tracking-widest">CMS Ecosystem Expertise</h4>
                   <div className="flex flex-wrap gap-2">
@@ -556,8 +556,8 @@ export default function App() {
         </motion.section>
 
         {/* Projects Section */}
-        <motion.section 
-          id="projects" 
+        <motion.section
+          id="projects"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -566,7 +566,7 @@ export default function App() {
         >
           <div className="max-w-7xl mx-auto">
             <SectionHeading subtitle="Featured Work">Key Projects</SectionHeading>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {PROJECTS.map((project, idx) => (
                 <motion.div
@@ -590,10 +590,10 @@ export default function App() {
                         ))}
                       </div>
                     </div>
-                    
+
                     <h3 className="text-3xl font-display font-bold mb-4">{project.title}</h3>
                     <p className="text-white/60 mb-8 flex-grow">{project.description}</p>
-                    
+
                     <div className="p-4 rounded-2xl bg-brand-green/10 border border-brand-green/20 mb-8">
                       <p className="text-xs font-mono text-brand-green uppercase mb-1">Impact</p>
                       <p className="text-sm font-medium text-white/90">{project.impact}</p>
@@ -610,7 +610,7 @@ export default function App() {
         </motion.section>
 
         {/* Hobbies Section */}
-        <motion.section 
+        <motion.section
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -664,11 +664,11 @@ export default function App() {
         </motion.section>
 
         {/* Contact Section */}
-        <motion.section 
-          id="contact" 
+        <motion.section
+          id="contact"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8 }}
           className="py-10 md:py-12 px-6"
         >
@@ -685,7 +685,7 @@ export default function App() {
               <div className="text-center md:text-left">
                 <h2 className="text-4xl font-display font-bold mb-4">Let's build something <br /><span className="text-brand-blue">impactful</span>.</h2>
               </div>
-              
+
               <div className="flex flex-col items-center md:items-end gap-6">
                 <div className="flex gap-4">
                   <a href="https://github.com/ajay235566" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
