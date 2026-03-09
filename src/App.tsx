@@ -25,6 +25,8 @@ import {
   Box
 } from 'lucide-react';
 import { Scene3D } from './components/Scene3D';
+import { AnimatedSignature } from './components/AnimatedSignature';
+import { FramerVector } from './components/FramerVector';
 import { cn } from './lib/utils';
 
 // --- Data ---
@@ -347,7 +349,7 @@ export default function App() {
                 </motion.div>
               </div>
 
-              <div className="lg:col-span-5 relative flex items-center justify-center">
+              <div className="lg:col-span-5 relative">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -682,8 +684,11 @@ export default function App() {
         <footer className="py-10 md:py-12 px-6 border-t border-white/10">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-center gap-12">
-              <div className="text-center md:text-left">
+              <div className="text-center md:text-left flex flex-col gap-2">
                 <h2 className="text-4xl font-display font-bold mb-4">Let's build something <br /><span className="text-brand-blue">impactful</span>.</h2>
+                <div className="w-48 h-auto mt-2 hidden md:block">
+                  <FramerVector />
+                </div>
               </div>
 
               <div className="flex flex-col items-center md:items-end gap-6">
