@@ -27,6 +27,7 @@ import {
 import { Scene3D } from './components/Scene3D';
 import { AnimatedSignature } from './components/AnimatedSignature';
 import { FramerVector } from './components/FramerVector';
+import { SplashScreen } from './components/SplashScreen';
 import { cn } from './lib/utils';
 
 // --- Data ---
@@ -233,6 +234,23 @@ const ContactForm = () => {
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
+  const [showSplash, setShowSplash] = useState(() => {
+    // Only show splash if haven't seen in this session
+    if (typeof window !== 'undefined') {
+      return !sessionStorage.getItem('splash_seen');
+    }
+    return true;
+  });
+
+  useEffect(() => {
+    if (showSplash) {
+      const timer = setTimeout(() => {
+        setShowSplash(false);
+        sessionStorage.setItem('splash_seen', 'true');
+      }, 5000); // 5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [showSplash]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -242,6 +260,9 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden">
+      <AnimatePresence mode="wait">
+        {showSplash && <SplashScreen key="splash" />}
+      </AnimatePresence>
       <ParallaxBackground />
 
       {/* Navigation */}
