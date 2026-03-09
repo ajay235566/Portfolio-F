@@ -41,6 +41,7 @@ const SKILLS = [
   { name: 'Google Tag Gateway', category: 'Infrastructure', icon: Cpu, color: 'text-white' },
   { name: 'Cost Data Import & Audiences', category: 'Strategy', icon: Terminal, color: 'text-brand-yellow' },
   { name: 'GTM Templates & Automation', category: 'Development', icon: Code2, color: 'text-brand-red' },
+  { name: 'Website Design', category: 'Design & Development', icon: Globe, color: 'text-brand-blue' },
 ];
 
 const CMS_EXPERTISE = [
