@@ -97,6 +97,13 @@ const PROJECTS = [
     impact: 'Reduced documentation time by 50-60%, saving ~60 mins per agent daily.',
     tags: ['Automation', 'Productivity', 'Internal Tool'],
     link: '#'
+  },
+  {
+    title: 'GTM Consent Mode (v2) Template',
+    description: 'A lightweight, automated template for managing Google Consent Mode (v2) across your site. Perfect compliance without performance drops.',
+    impact: 'Ensures user privacy preferences are respected instantly upon interaction.',
+    tags: ['GTM', 'Consent Mode', 'Template'],
+    link: '#gtm-consent-template'
   }
 ];
 
@@ -536,21 +543,6 @@ export default function App() {
                       className="inline-flex items-center gap-2 text-brand-blue font-bold hover:underline"
                     >
                       Visit Precision Analytics <ExternalLink size={16} />
-                    </a>
-                  </div>
-
-                  <div className="glass p-8 rounded-3xl border-brand-yellow/20">
-                    <h3 className="text-2xl font-display font-bold mb-4 flex items-center gap-3">
-                      <ShieldCheck className="text-brand-yellow" /> GTM Consent Mode (v2)
-                    </h3>
-                    <p className="text-white/60 mb-6">
-                      A lightweight, automated template for managing Google Consent Mode (v2) across your site. Perfect compliance without performance drops.
-                    </p>
-                    <a
-                      href="#gtm-consent-template"
-                      className="inline-flex items-center gap-2 text-brand-yellow font-bold hover:underline"
-                    >
-                      View Documentation & Code <ArrowUpRight size={16} />
                     </a>
                   </div>
                 </div>
