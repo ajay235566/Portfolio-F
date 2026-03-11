@@ -30,6 +30,7 @@ import { AnimatedSignature } from './components/AnimatedSignature';
 import { FramerVector } from './components/FramerVector';
 import { SplashScreen } from './components/SplashScreen';
 import { cn } from './lib/utils';
+import { trackEvent } from './lib/analytics';
 
 // --- Data ---
 
@@ -157,6 +158,11 @@ const ContactForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
+    trackEvent({
+      action: 'generate_lead',
+      category: 'Contact',
+      label: 'Form Submit'
+    });
     setTimeout(() => setStatus('sent'), 1500);
   };
 
@@ -304,6 +310,7 @@ export default function App() {
             <motion.a
               href="/AjayKumarNallamothu.pdf"
               download
+              onClick={() => trackEvent({ action: 'file_download', category: 'Engagement', label: 'Resume Nav' })}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="hidden sm:flex items-center gap-2 text-sm font-bold text-white/70 hover:text-white transition-colors"
@@ -369,6 +376,7 @@ export default function App() {
                     <motion.a
                       href="/AjayKumarNallamothu.pdf"
                       download
+                      onClick={() => trackEvent({ action: 'file_download', category: 'Engagement', label: 'Resume Hero' })}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       className="px-8 py-4 rounded-2xl border border-brand-green/30 bg-brand-green/5 text-brand-green font-bold flex items-center gap-3 hover:bg-brand-green/10 transition-colors"
@@ -540,6 +548,7 @@ export default function App() {
                       href="https://precison-analytics.vercel.app/"
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackEvent({ action: 'click', category: 'Project Links', label: 'Precision Analytics' })}
                       className="inline-flex items-center gap-2 text-brand-blue font-bold hover:underline"
                     >
                       Visit Precision Analytics <ExternalLink size={16} />
@@ -631,7 +640,11 @@ export default function App() {
                       <p className="text-sm font-medium text-white/90">{project.impact}</p>
                     </div>
 
-                    <a href={project.link} className="inline-flex items-center gap-2 text-sm font-bold group-hover:text-brand-blue transition-colors">
+                    <a 
+                      href={project.link} 
+                      onClick={() => trackEvent({ action: 'click', category: 'Project Links', label: project.title })}
+                      className="inline-flex items-center gap-2 text-sm font-bold group-hover:text-brand-blue transition-colors"
+                    >
                       View Case Study <ExternalLink size={16} />
                     </a>
                   </div>
@@ -723,16 +736,16 @@ export default function App() {
 
               <div className="flex flex-col items-center md:items-end gap-6">
                 <div className="flex gap-4">
-                  <a href="https://github.com/ajay235566" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
+                  <a href="https://github.com/ajay235566" onClick={() => trackEvent({ action: 'click', category: 'Outbound Link', label: 'GitHub' })} target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
                     <Github size={24} className="group-hover:scale-110 transition-transform" />
                   </a>
-                  <a href="mailto:ajayignited@gmail.com" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
+                  <a href="mailto:ajayignited@gmail.com" onClick={() => trackEvent({ action: 'click', category: 'Outbound Link', label: 'Email' })} className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
                     <Mail size={24} className="group-hover:scale-110 transition-transform" />
                   </a>
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
+                  <a href="https://linkedin.com" onClick={() => trackEvent({ action: 'click', category: 'Outbound Link', label: 'LinkedIn' })} target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
                     <Linkedin size={24} className="group-hover:scale-110 transition-transform" />
                   </a>
-                  <a href="tel:+919952917578" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
+                  <a href="tel:+919952917578" onClick={() => trackEvent({ action: 'click', category: 'Outbound Link', label: 'Phone' })} className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
                     <Phone size={24} className="group-hover:scale-110 transition-transform" />
                   </a>
                 </div>
