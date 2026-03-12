@@ -83,14 +83,14 @@ const PROJECTS = [
     description: 'A comprehensive task management application built for high-performance tracking and productivity.',
     impact: 'Streamlined daily operations and improved task completion visibility.',
     tags: ['React', 'Productivity', 'Web App'],
-    link: 'https://task-tracker-phi-umber.vercel.app/'
+    link: 'https://task.ajaynallamothu.co.in/'
   },
   {
     title: 'GTM Automation Tool',
     description: 'Advanced automation tool for Google Tag Manager to streamline measurement implementation.',
     impact: 'Reduced manual configuration time and minimized human error in tracking.',
     tags: ['Automation', 'GTM', 'Efficiency'],
-    link: 'https://gtm-automation-omega.vercel.app/'
+    link: 'https://gtm.ajaynallamothu.co.in/'
   },
   {
     title: 'OneDoc - CaseNote Automator',
