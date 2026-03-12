@@ -645,7 +645,7 @@ export default function App() {
                       onClick={() => trackEvent({ action: 'click', category: 'Project Links', label: project.title })}
                       className="inline-flex items-center gap-2 text-sm font-bold group-hover:text-brand-blue transition-colors"
                     >
-                      View Case Study <ExternalLink size={16} />
+                      Project Link <ExternalLink size={16} />
                     </a>
                   </div>
                 </motion.div>
@@ -749,7 +749,11 @@ export default function App() {
                     <Phone size={24} className="group-hover:scale-110 transition-transform" />
                   </a>
                 </div>
-                <p className="text-xs text-white/20 font-mono">© 2025 AJAY KUMAR NALLAMOTHU. ALL RIGHTS RESERVED.</p>
+                <div className="flex flex-col md:flex-row items-center gap-4">
+                  <p className="text-xs text-white/20 font-mono">© 2025 AJAY KUMAR NALLAMOTHU. ALL RIGHTS RESERVED.</p>
+                  <span className="hidden md:block text-white/10">•</span>
+                  <a href="/sitemap.xml" className="text-xs text-white/20 font-mono hover:text-brand-blue transition-colors">SITEMAP</a>
+                </div>
               </div>
             </div>
           </div>
