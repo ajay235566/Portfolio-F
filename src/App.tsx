@@ -26,7 +26,6 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { Scene3D } from './components/Scene3D';
-import { AnimatedSignature } from './components/AnimatedSignature';
 import { FramerVector } from './components/FramerVector';
 import { SplashScreen } from './components/SplashScreen';
 import { cn } from './lib/utils';
