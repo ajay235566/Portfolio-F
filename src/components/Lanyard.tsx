@@ -211,18 +211,30 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
               drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation())));
             }}
           >
-            <mesh geometry={nodes.card.geometry}>
-              <meshPhysicalMaterial
-                map={materials.base.map}
-                map-anisotropy={16}
-                clearcoat={isMobile ? 0 : 1}
-                clearcoatRoughness={0.15}
-                roughness={0.9}
-                metalness={0.8}
-              />
-            </mesh>
-            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
-            <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
+            {nodes.card && (
+              <mesh geometry={nodes.card.geometry}>
+                <meshPhysicalMaterial
+                  map={materials?.base?.map}
+                  map-anisotropy={16}
+                  clearcoat={isMobile ? 0 : 1}
+                  clearcoatRoughness={0.15}
+                  roughness={0.9}
+                  metalness={0.8}
+                />
+              </mesh>
+            )}
+            {nodes.clip && (
+              <mesh geometry={nodes.clip.geometry} material={materials?.metal} material-roughness={0.3} />
+            )}
+            {nodes.clamp && (
+              <mesh geometry={nodes.clamp.geometry} material={materials?.metal} />
+            )}
+            {!nodes.card && (
+              <mesh>
+                <boxGeometry args={[0.8, 1.125, 0.01]} />
+                <meshStandardMaterial color="maroon" />
+              </mesh>
+            )}
           </group>
         </RigidBody>
       </group>
