@@ -345,10 +345,10 @@ export default function App() {
                 href="tel:+919952917578"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-10 h-10 rounded-full glass flex items-center justify-center text-text-primary hover:text-brand-blue transition-colors"
+                className="w-8 h-8 rounded-full glass flex items-center justify-center text-text-primary hover:text-brand-blue transition-colors"
                 onClick={() => trackEvent({ action: 'click', category: 'Engagement', label: 'Call Nav' })}
               >
-                <Phone size={18} />
+                <Phone size={16} />
               </motion.a>
             </div>
           </div>
