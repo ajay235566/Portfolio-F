@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { FramerVector } from './components/FramerVector';
 import { SplashScreen } from './components/SplashScreen';
+import { ThemeToggle } from './components/ThemeToggle';
 import { cn } from './lib/utils';
 import { trackEvent } from './lib/analytics';
 import Hero from "./components/Hero";
@@ -123,7 +124,7 @@ const SectionHeading = ({ children, subtitle }: { children: React.ReactNode, sub
       {children}
     </h2>
     {subtitle && (
-      <p className="text-white/50 font-mono text-sm uppercase tracking-widest">
+      <p className="text-text-secondary font-mono text-sm uppercase tracking-widest">
         {subtitle}
       </p>
     )}
@@ -178,7 +179,7 @@ const ContactForm = () => {
 
       <div className="relative z-10">
         <h3 className="text-3xl font-display font-bold mb-2">Get in Touch</h3>
-        <p className="text-white/50 mb-8">Have a project in mind? Let's discuss how we can work together.</p>
+        <p className="text-text-secondary mb-8">Have a project in mind? Let's discuss how we can work together.</p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -248,6 +249,29 @@ const ContactForm = () => {
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window !== 'undefined') {
+      return (localStorage.getItem('theme') as 'light' | 'dark') || 'dark';
+    }
+    return 'dark';
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+    trackEvent({
+      action: 'toggle_theme',
+      category: 'UX',
+      label: theme === 'light' ? 'dark' : 'light'
+    });
+  };
+
   const [showSplash, setShowSplash] = useState(() => {
     // Only show splash if haven't seen in this session
     if (typeof window !== 'undefined') {
@@ -294,12 +318,12 @@ export default function App() {
               AJAY<span className="text-brand-blue">.</span>KUMAR
             </motion.div>
 
-            <div className="hidden md:flex gap-8 text-sm font-medium text-white/70">
+            <div className="hidden md:flex gap-8 text-sm font-medium text-text-secondary">
               {['About', 'Experience', 'Skills', 'Projects', 'Freelance', 'Blog'].map((item) => (
                 <a
                   key={item}
                   href={item === 'Blog' ? '#' : `#${item.toLowerCase()}`}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-text-primary transition-colors"
                 >
                   {item}
                 </a>
@@ -307,13 +331,15 @@ export default function App() {
             </div>
 
             <div className="flex items-center gap-4">
+              <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+              
               <motion.a
                 href="/AjayKumarNallamothu.pdf"
                 download
                 onClick={() => trackEvent({ action: 'file_download', category: 'Engagement', label: 'Resume Nav' })}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="hidden sm:flex items-center gap-2 text-sm font-bold text-white/70 hover:text-white transition-colors"
+                className="hidden sm:flex items-center gap-2 text-sm font-bold text-text-secondary hover:text-text-primary transition-colors"
               >
                 Resume <Download size={16} />
               </motion.a>
@@ -321,7 +347,7 @@ export default function App() {
                 href="mailto:ajayignited@gmail.com"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-5 py-2 rounded-full bg-white text-black text-sm font-bold flex items-center gap-2"
+                className="px-5 py-2 rounded-full bg-text-primary text-bg-primary text-sm font-bold flex items-center gap-2"
               >
                 Hire Me <ChevronRight size={16} />
               </motion.a>
@@ -354,11 +380,11 @@ export default function App() {
                     <span>EXPERT</span>
                   </h1>
 
-                  <p className="text-xl md:text-2xl text-white/60 max-w-2xl mb-10 leading-relaxed">
+                  <p className="text-xl md:text-2xl text-text-secondary max-w-2xl mb-10 leading-relaxed">
                     I bridge the gap between complex data tracking and business growth.
-                    Specializing in <span className="text-white">Google Ads</span>,
-                    <span className="text-white"> Analytics</span>, and
-                    <span className="text-white"> Automation</span>.
+                    Specializing in <span className="text-text-primary">Google Ads</span>,
+                    <span className="text-text-primary"> Analytics</span>, and
+                    <span className="text-text-primary"> Automation</span>.
                   </p>
 
                   <div className="flex flex-wrap gap-4">
@@ -436,14 +462,14 @@ export default function App() {
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
               <SectionHeading subtitle="The Strategy">About Me</SectionHeading>
-              <div className="space-y-6 text-lg text-white/70 leading-relaxed">
+              <div className="space-y-6 text-lg text-text-secondary leading-relaxed">
                 <p>
-                  I am a results-driven <span className="text-white font-medium">Technical Consultant</span> specializing in advanced measurement strategy and implementation.
+                  I am a results-driven <span className="text-text-primary font-medium">Technical Consultant</span> specializing in advanced measurement strategy and implementation.
                   My expertise lies in architecting robust tracking solutions that bridge the gap between raw data and actionable business intelligence.
                 </p>
                 <p>
-                  Currently, I serve as a <span className="text-white font-medium">Subject Matter Expert</span> at Cognizant, where I consult for global clients on complex tracking ecosystems.
-                  My technical depth extends across all major CMS platforms including <span className="text-white">Shopify, WordPress, Wix, Squarespace, and Magento</span>.
+                  Currently, I serve as a <span className="text-text-primary font-medium">Subject Matter Expert</span> at Cognizant, where I consult for global clients on complex tracking ecosystems.
+                  My technical depth extends across all major CMS platforms including <span className="text-text-primary">Shopify, WordPress, Wix, Squarespace, and Magento</span>.
                 </p>
                 <p>
                   I am also available for <span className="text-brand-blue font-medium">freelance consulting</span> and <span className="text-brand-green font-medium">technical training</span>, helping businesses and teams master the modern measurement stack.
@@ -481,13 +507,13 @@ export default function App() {
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div className="lg:col-span-4">
                       <h3 className="text-2xl font-display font-bold">{exp.company}</h3>
-                      <p className="text-white/60 font-medium">{exp.role}</p>
+                      <p className="text-text-primary font-medium">{exp.role}</p>
                     </div>
                     <div className="lg:col-span-8">
-                      <p className="text-white/80 mb-6">{exp.description}</p>
+                      <p className="text-text-primary/80 mb-6">{exp.description}</p>
                       <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {exp.highlights.map((item, i) => (
-                          <li key={i} className="flex items-start gap-3 text-sm text-white/50">
+                          <li key={i} className="flex items-start gap-3 text-sm text-text-secondary">
                             <ChevronRight size={14} className="text-brand-green shrink-0 mt-1" />
                             {item}
                           </li>
@@ -523,7 +549,7 @@ export default function App() {
                   <div className={cn("w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform", skill.color)}>
                     <skill.icon size={24} />
                   </div>
-                  <p className="text-xs font-mono text-white/40 uppercase mb-2">{skill.category}</p>
+                  <p className="text-xs font-mono text-text-secondary uppercase mb-2">{skill.category}</p>
                   <h3 className="text-xl font-display font-bold">{skill.name}</h3>
                 </motion.div>
               ))}
@@ -549,7 +575,7 @@ export default function App() {
                     <h3 className="text-2xl font-display font-bold mb-4 flex items-center gap-3">
                       <Globe className="text-brand-blue" /> Precision Analytics
                     </h3>
-                    <p className="text-white/60 mb-6">
+                    <p className="text-text-secondary mb-6">
                       End-to-end measurement consulting for businesses. I specialize in setting up advanced tracking for complex ecosystems, ensuring data accuracy across all touchpoints.
                     </p>
                     <ul className="space-y-3 mb-8">
@@ -560,7 +586,7 @@ export default function App() {
                         'Consent Mode Verification',
                         'Server-Side Tagging'
                       ].map((item, i) => (
-                        <li key={i} className="flex items-center gap-3 text-sm text-white/70">
+                        <li key={i} className="flex items-center gap-3 text-sm text-text-secondary">
                           <ChevronRight size={14} className="text-brand-blue" /> {item}
                         </li>
                       ))}
@@ -579,11 +605,11 @@ export default function App() {
               </div>
 
               <div className="space-y-8">
-                <div className="glass p-8 rounded-3xl border-brand-green/20">
+                 <div className="glass p-8 rounded-3xl border-brand-green/20">
                   <h3 className="text-2xl font-display font-bold mb-4 flex items-center gap-3">
                     <BookOpen className="text-brand-green" /> Technical Training
                   </h3>
-                  <p className="text-white/60 mb-6">
+                  <p className="text-text-secondary mb-6">
                     Empowering teams with the knowledge to manage their own measurement stack. I provide tailored training sessions for agencies and in-house teams.
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -654,11 +680,11 @@ export default function App() {
                     </div>
 
                     <h3 className="text-3xl font-display font-bold mb-4">{project.title}</h3>
-                    <p className="text-white/60 mb-8 flex-grow">{project.description}</p>
+                    <p className="text-text-secondary mb-8 flex-grow">{project.description}</p>
 
                     <div className="p-4 rounded-2xl bg-brand-green/10 border border-brand-green/20 mb-8">
                       <p className="text-xs font-mono text-brand-green uppercase mb-1">Impact</p>
-                      <p className="text-sm font-medium text-white/90">{project.impact}</p>
+                      <p className="text-sm font-medium text-text-primary/90">{project.impact}</p>
                     </div>
 
                     <a
@@ -722,7 +748,7 @@ export default function App() {
                 </div>
                 <div>
                   <h3 className="text-xl font-display font-bold mb-2">N8N Workflows</h3>
-                  <p className="text-white/50 text-xs">Building intricate automation pipelines to connect disparate data sources.</p>
+                  <p className="text-text-secondary text-xs">Building intricate automation pipelines to connect disparate data sources.</p>
                 </div>
               </div>
             </div>
@@ -771,9 +797,9 @@ export default function App() {
                   </a>
                 </div>
                 <div className="flex flex-col md:flex-row items-center gap-4">
-                  <p className="text-xs text-white/20 font-mono">© 2025 AJAY KUMAR NALLAMOTHU. ALL RIGHTS RESERVED.</p>
-                  <span className="hidden md:block text-white/10">•</span>
-                  <a href="/sitemap.xml" className="text-xs text-white/20 font-mono hover:text-brand-blue transition-colors">SITEMAP</a>
+                  <p className="text-xs text-text-secondary/40 font-mono">© 2025 AJAY KUMAR NALLAMOTHU. ALL RIGHTS RESERVED.</p>
+                  <span className="hidden md:block text-text-secondary/20">•</span>
+                  <a href="/sitemap.xml" className="text-xs text-text-secondary/40 font-mono hover:text-brand-blue transition-colors">SITEMAP</a>
                 </div>
               </div>
             </div>
