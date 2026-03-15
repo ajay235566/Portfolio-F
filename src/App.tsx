@@ -247,6 +247,20 @@ const ContactForm = () => {
 };
 
 export default function App() {
+  useEffect(() => {
+    // Handle scrolling to hash on mount (useful for cross-page navigation)
+    const hash = window.location.hash;
+    if (hash && hash !== '#blog' && hash !== '#gtm-consent-template') {
+      const id = hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        // Small delay to ensure any layout/animations are ready
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, []);
 
   return (
     <>
