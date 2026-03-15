@@ -2,6 +2,7 @@ import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import ConsentDocs from './pages/ConsentDocs.tsx';
+import Blog from './pages/Blog.tsx';
 import './index.css';
 
 function Main() {
@@ -15,6 +16,10 @@ function Main() {
 
   if (route === '#gtm-consent-template') {
     return <ConsentDocs />;
+  }
+
+  if (route === '#blog') {
+    return <Blog />;
   }
 
   return <App />;

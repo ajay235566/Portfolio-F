@@ -322,7 +322,7 @@ export default function App() {
               {['About', 'Experience', 'Skills', 'Projects', 'Freelance', 'Blog'].map((item) => (
                 <a
                   key={item}
-                  href={item === 'Blog' ? '#' : `#${item.toLowerCase()}`}
+                  href={item === 'Blog' ? '#blog' : `#${item.toLowerCase()}`}
                   className="hover:text-text-primary transition-colors"
                 >
                   {item}
