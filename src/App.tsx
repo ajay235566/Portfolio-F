@@ -27,7 +27,6 @@ import {
 } from 'lucide-react';
 import { FramerVector } from './components/FramerVector';
 import { SplashScreen } from './components/SplashScreen';
-import { ThemeToggle } from './components/ThemeToggle';
 import { cn } from './lib/utils';
 import { trackEvent } from './lib/analytics';
 import Hero from "./components/Hero";
@@ -248,111 +247,9 @@ const ContactForm = () => {
 };
 
 export default function App() {
-  const [scrolled, setScrolled] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    if (typeof window !== 'undefined') {
-      return (localStorage.getItem('theme') as 'light' | 'dark') || 'dark';
-    }
-    return 'dark';
-  });
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
-    trackEvent({
-      action: 'toggle_theme',
-      category: 'UX',
-      label: theme === 'light' ? 'dark' : 'light'
-    });
-  };
-
-  const [showSplash, setShowSplash] = useState(() => {
-    // Only show splash if haven't seen in this session
-    if (typeof window !== 'undefined') {
-      return !sessionStorage.getItem('splash_seen');
-    }
-    return true;
-  });
-
-  useEffect(() => {
-    if (showSplash) {
-      const timer = setTimeout(() => {
-        setShowSplash(false);
-        sessionStorage.setItem('splash_seen', 'true');
-      }, 4000); // 4 seconds
-      return () => clearTimeout(timer);
-    }
-  }, [showSplash]);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden">
-      <AnimatePresence mode="wait">
-        {showSplash && <SplashScreen key="splash" />}
-      </AnimatePresence>
-      <ParallaxBackground />
-
-      <main className="relative z-10 transition-opacity duration-1000">
-        {/* Navigation */}
-        <nav className={cn(
-          "fixed top-0 w-full z-50 transition-all duration-300 px-6 py-4",
-          scrolled ? "glass py-3" : "bg-transparent"
-        )}>
-          <div className="max-w-7xl mx-auto flex justify-between items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="font-display font-bold text-xl tracking-tighter"
-            >
-              AJAY<span className="text-brand-blue">.</span>KUMAR
-            </motion.div>
-
-            <div className="hidden md:flex gap-8 text-sm font-medium text-text-secondary">
-              {['About', 'Experience', 'Skills', 'Projects', 'Freelance', 'Blog'].map((item) => (
-                <a
-                  key={item}
-                  href={item === 'Blog' ? '#blog' : `#${item.toLowerCase()}`}
-                  className="hover:text-text-primary transition-colors"
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-4">
-              <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
-              
-              <motion.a
-                href="mailto:ajayignited@gmail.com"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-5 py-2 rounded-full bg-text-primary text-bg-primary text-sm font-bold flex items-center gap-2"
-              >
-                Hire Me <ChevronRight size={16} />
-              </motion.a>
-              <motion.a
-                href="tel:+919952917578"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-8 h-8 rounded-full glass flex items-center justify-center text-text-primary hover:text-brand-blue transition-colors"
-                onClick={() => trackEvent({ action: 'click', category: 'Engagement', label: 'Call Nav' })}
-              >
-                <Phone size={16} />
-              </motion.a>
-            </div>
-          </div>
-        </nav>
+    <>
         {/* Hero Section */}
         {/* Hero Section */}
         <section className="min-h-screen flex flex-col justify-center px-6 pt-20">
@@ -788,7 +685,6 @@ export default function App() {
             </div>
           </div>
         </footer>
-      </main>
-    </div>
+    </>
   );
 }

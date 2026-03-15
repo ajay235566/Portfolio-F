@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import {
-  ArrowLeft,
   Settings,
   ShieldCheck,
   Zap,
@@ -14,15 +13,6 @@ import {
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-// Simplified ParallaxBackground for this page or we can just import from App if exported. Since it's not exported, recreate a simple one.
-const Background = () => (
-  <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-[#050505]">
-    <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-blue/10 blur-[120px] rounded-full" />
-    <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-red/10 blur-[120px] rounded-full" />
-    <div className="absolute inset-0 grid-pattern opacity-20" />
-  </div>
-);
-
 const CodeBlock = ({ code, language }: { code: string, language: string }) => {
   const [copied, setCopied] = useState(false);
 
@@ -33,18 +23,18 @@ const CodeBlock = ({ code, language }: { code: string, language: string }) => {
   };
 
   return (
-    <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-[#111] my-6">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-white/5">
-        <span className="text-xs font-mono text-white/50 lowercase">{language}</span>
+    <div className="relative rounded-2xl overflow-hidden border border-text-primary/10 bg-text-primary/5 my-6">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-text-primary/10 bg-text-primary/5">
+        <span className="text-xs font-mono text-text-secondary lowercase">{language}</span>
         <button
           onClick={copyToClipboard}
-          className="text-white/50 hover:text-white transition-colors flex items-center gap-2 text-xs font-mono"
+          className="text-text-secondary hover:text-text-primary transition-colors flex items-center gap-2 text-xs font-mono"
         >
           {copied ? <CheckCircle2 size={14} className="text-brand-green" /> : <Copy size={14} />}
           {copied ? 'Copied!' : 'Copy'}
         </button>
       </div>
-      <div className="p-4 overflow-x-auto text-sm font-mono text-white/80 leading-relaxed">
+      <div className="p-4 overflow-x-auto text-sm font-mono text-text-primary/80 leading-relaxed">
         <pre><code>{code}</code></pre>
       </div>
     </div>
@@ -164,22 +154,8 @@ export default function ConsentDocs() {
 </div>`;
 
   return (
-    <div className="relative min-h-screen">
-      <Background />
-
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 glass py-4 px-6">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <a href="#" className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm font-bold">
-            <ArrowLeft size={16} /> Back to Home
-          </a>
-          <div className="font-display font-bold md:text-xl tracking-tighter">
-            AJAY<span className="text-brand-blue">.</span>KUMAR
-          </div>
-        </div>
-      </nav>
-
-      <main className="relative z-10 pt-32 pb-20 px-6">
+    <div className="relative min-h-screen pt-24 pb-20 px-6">
+      <main className="relative z-10 pt-12">
         <div className="max-w-4xl mx-auto space-y-16">
           
           {/* Header */}
@@ -189,12 +165,12 @@ export default function ConsentDocs() {
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass mb-6">
               <ShieldCheck size={14} className="text-brand-green" />
-              <span className="text-xs font-mono text-white/70 uppercase tracking-wider">Official Documentation</span>
+              <span className="text-xs font-mono text-text-secondary uppercase tracking-wider">Official Documentation</span>
             </div>
             <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
               GTM Consent Mode <span className="text-brand-blue">(v2)</span> Template
             </h1>
-            <p className="text-xl text-white/60 leading-relaxed">
+            <p className="text-xl text-text-secondary leading-relaxed">
               This template provides a lightweight, automated solution for managing Google Consent Mode (v2). 
               It acts as a bridge between the browser's cookie storage, the Data Layer, and GTM's internal consent engine. 
               It ensures that user privacy preferences are respected instantly upon interaction without requiring a page reload.
@@ -238,12 +214,12 @@ export default function ConsentDocs() {
                   desc: 'Eliminates the need for creating multiple manual Data Layer Variables in GTM. It automatically maps the four primary consent keys: ad_storage, analytics_storage, ad_user_data, ad_personalization.'
                 }
               ].map((feature, i) => (
-                <div key={i} className="glass p-6 rounded-3xl hover:bg-white/5 transition-colors">
-                  <div className={cn("w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-4", feature.color)}>
+                <div key={i} className="glass p-6 rounded-3xl hover:bg-text-primary/5 transition-colors">
+                  <div className={cn("w-12 h-12 rounded-2xl bg-text-primary/5 flex items-center justify-center mb-4", feature.color)}>
                     <feature.icon size={24} />
                   </div>
                   <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed">{feature.desc}</p>
+                  <p className="text-text-secondary text-sm leading-relaxed">{feature.desc}</p>
                 </div>
               ))}
             </div>
@@ -260,20 +236,20 @@ export default function ConsentDocs() {
               <Zap className="text-brand-yellow" /> How It Works
             </h2>
             <div className="glass p-8 rounded-3xl space-y-8">
-              <div className="relative pl-8 border-l border-white/10">
-                <div className="absolute left-[-17px] top-0 w-8 h-8 rounded-full bg-[#111] border border-white/20 flex items-center justify-center font-mono text-xs text-brand-blue">01</div>
-                <h3 className="text-xl font-bold mb-2">Default State</h3>
-                <p className="text-white/60 text-sm">On Consent Initialization, the tag reads the <code>nalla_consent_preferences</code> cookie. If the user is new, it sets the initial state to denied.</p>
+              <div className="relative pl-8 border-l border-text-primary/10">
+                <div className="absolute left-[-17px] top-0 w-8 h-8 rounded-full bg-bg-primary border border-text-primary/20 flex items-center justify-center font-mono text-xs text-brand-blue">01</div>
+                <h3 className="text-xl font-bold mb-2 text-text-primary">Default State</h3>
+                <p className="text-text-secondary text-sm">On Consent Initialization, the tag reads the <code>nalla_consent_preferences</code> cookie. If the user is new, it sets the initial state to denied.</p>
               </div>
-              <div className="relative pl-8 border-l border-white/10">
-                <div className="absolute left-[-17px] top-0 w-8 h-8 rounded-full bg-[#111] border border-white/20 flex items-center justify-center font-mono text-xs text-brand-green">02</div>
-                <h3 className="text-xl font-bold mb-2">User Interaction</h3>
-                <p className="text-white/60 text-sm">When a user interacts with the banner, the banner script saves the cookie and pushes a <code>user_consent_update</code> event to the Data Layer.</p>
+              <div className="relative pl-8 border-l border-text-primary/10">
+                <div className="absolute left-[-17px] top-0 w-8 h-8 rounded-full bg-bg-primary border border-text-primary/20 flex items-center justify-center font-mono text-xs text-brand-green">02</div>
+                <h3 className="text-xl font-bold mb-2 text-text-primary">User Interaction</h3>
+                <p className="text-text-secondary text-sm">When a user interacts with the banner, the banner script saves the cookie and pushes a <code>user_consent_update</code> event to the Data Layer.</p>
               </div>
               <div className="relative pl-8 border-l border-transparent">
-                <div className="absolute left-[-17px] top-0 w-8 h-8 rounded-full bg-[#111] border border-white/20 flex items-center justify-center font-mono text-xs text-brand-red">03</div>
-                <h3 className="text-xl font-bold mb-2">Instant Update</h3>
-                <p className="text-white/60 text-sm">The template catches this event, extracts the new statuses directly from the Data Layer push, and executes an update command to GTM's Consent Mode.</p>
+                <div className="absolute left-[-17px] top-0 w-8 h-8 rounded-full bg-bg-primary border border-text-primary/20 flex items-center justify-center font-mono text-xs text-brand-red">03</div>
+                <h3 className="text-xl font-bold mb-2 text-text-primary">Instant Update</h3>
+                <p className="text-text-secondary text-sm">The template catches this event, extracts the new statuses directly from the Data Layer push, and executes an update command to GTM's Consent Mode.</p>
               </div>
             </div>
           </motion.section>
@@ -286,16 +262,16 @@ export default function ConsentDocs() {
             className="space-y-6"
           >
             <h2 className="text-3xl font-display font-bold flex items-center gap-3">
-              <Database className="text-white" /> Technical Requirements
+              <Database className="text-text-primary" /> Technical Requirements
             </h2>
             <div className="glass p-8 rounded-3xl border-brand-green/20 space-y-4">
-              <p className="text-white/80">
-                <strong className="text-white">Permissions:</strong> Requires "Access Cookies" (for <code>nalla_consent_preferences</code>) and "Access Data Layer" (Wildcard or specific keys) enabled in the template settings.
+              <p className="text-text-secondary">
+                <strong className="text-text-primary">Permissions:</strong> Requires "Access Cookies" (for <code>nalla_consent_preferences</code>) and "Access Data Layer" (Wildcard or specific keys) enabled in the template settings.
               </p>
-              <p className="text-white/80">
-                <strong className="text-white">Cookie Format:</strong> Expects a JSON stringified object:
+              <p className="text-text-secondary">
+                <strong className="text-text-primary">Cookie Format:</strong> Expects a JSON stringified object:
               </p>
-              <div className="bg-black/50 p-4 rounded-xl border border-white/10 font-mono text-sm text-brand-green">
+              <div className="bg-text-primary/5 p-4 rounded-xl border border-text-primary/10 font-mono text-sm text-brand-green">
                 &#123;"ad_storage":"granted", "analytics_storage":"granted", ...&#125;
               </div>
             </div>
@@ -311,19 +287,19 @@ export default function ConsentDocs() {
             <h2 className="text-3xl font-display font-bold flex items-center gap-3">
               <Code2 className="text-brand-blue" /> Setup Instructions
             </h2>
-            <p className="text-white/60">
+            <p className="text-text-secondary">
               Include the following code snippets in the <code>&lt;head&gt;</code> section of your website across all pages.
             </p>
 
             <div className="mt-8">
-              <h3 className="text-xl font-bold mb-4 text-white/90">1. Cookie Banner HTML Code</h3>
-              <p className="text-sm text-white/50 mb-2">This is the visual consent banner presented to the user.</p>
+              <h3 className="text-xl font-bold mb-4 text-text-primary/90">1. Cookie Banner HTML Code</h3>
+              <p className="text-sm text-text-secondary mb-2">This is the visual consent banner presented to the user.</p>
               <CodeBlock code={htmlBannerCode} language="html" />
             </div>
 
             <div className="mt-8">
-              <h3 className="text-xl font-bold mb-4 text-white/90">2. Consent Logic Script</h3>
-              <p className="text-sm text-white/50 mb-2">Handles browser cookie storage, Data Layer pushes, and UI toggling.</p>
+              <h3 className="text-xl font-bold mb-4 text-text-primary/90">2. Consent Logic Script</h3>
+              <p className="text-sm text-text-secondary mb-2">Handles browser cookie storage, Data Layer pushes, and UI toggling.</p>
               <CodeBlock code={scriptCode} language="html" />
             </div>
           </motion.section>
