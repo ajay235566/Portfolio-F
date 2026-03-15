@@ -184,41 +184,41 @@ const ContactForm = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-xs font-mono text-white/40 uppercase ml-1">Name</label>
+              <label className="text-xs font-mono text-text-secondary uppercase ml-1">Name</label>
               <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary/30" size={18} />
                 <input
                   required
                   type="text"
                   placeholder="John Doe"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-white placeholder:text-white/20"
+                  className="w-full bg-text-primary/5 border border-text-primary/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-text-primary placeholder:text-text-secondary/30"
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-mono text-white/40 uppercase ml-1">Email</label>
+              <label className="text-xs font-mono text-text-secondary uppercase ml-1">Email</label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary/30" size={18} />
                 <input
                   required
                   type="email"
                   placeholder="john@example.com"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-white placeholder:text-white/20"
+                  className="w-full bg-text-primary/5 border border-text-primary/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-text-primary placeholder:text-text-secondary/30"
                 />
               </div>
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-mono text-white/40 uppercase ml-1">Message</label>
+            <label className="text-xs font-mono text-text-secondary uppercase ml-1">Message</label>
             <div className="relative">
-              <MessageSquare className="absolute left-4 top-6 text-white/20" size={18} />
-              <textarea
-                required
-                rows={4}
-                placeholder="help me with your queries..."
-                className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-white placeholder:text-white/20 resize-none"
-              />
+              <MessageSquare className="absolute left-4 top-6 text-text-secondary/30" size={18} />
+            <textarea
+              required
+              rows={4}
+              placeholder="help me with your queries..."
+              className="w-full bg-text-primary/5 border border-text-primary/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-text-primary placeholder:text-text-secondary/30 resize-none"
+            />
             </div>
           </div>
 
@@ -334,22 +334,21 @@ export default function App() {
               <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
               
               <motion.a
-                href="/AjayKumarNallamothu.pdf"
-                download
-                onClick={() => trackEvent({ action: 'file_download', category: 'Engagement', label: 'Resume Nav' })}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="hidden sm:flex items-center gap-2 text-sm font-bold text-text-secondary hover:text-text-primary transition-colors"
-              >
-                Resume <Download size={16} />
-              </motion.a>
-              <motion.a
                 href="mailto:ajayignited@gmail.com"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="px-5 py-2 rounded-full bg-text-primary text-bg-primary text-sm font-bold flex items-center gap-2"
               >
                 Hire Me <ChevronRight size={16} />
+              </motion.a>
+              <motion.a
+                href="tel:+919952917578"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-10 h-10 rounded-full glass flex items-center justify-center text-text-primary hover:text-brand-blue transition-colors"
+                onClick={() => trackEvent({ action: 'click', category: 'Engagement', label: 'Call Nav' })}
+              >
+                <Phone size={18} />
               </motion.a>
             </div>
           </div>
@@ -369,7 +368,7 @@ export default function App() {
                 >
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass mb-6">
                     <ArrowUpRight size={14} className="text-brand-green animate-pulse" />
-                    <span className="text-xs font-mono text-white/70 uppercase tracking-wider">
+                    <span className="text-xs font-mono text-text-secondary uppercase tracking-wider">
                       Available for new opportunities
                     </span>
                   </div>
@@ -409,27 +408,11 @@ export default function App() {
                       }
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="px-8 py-4 rounded-2xl glass text-white font-bold flex items-center gap-3"
+                      className="px-8 py-4 rounded-2xl glass text-text-primary font-bold flex items-center gap-3"
                     >
                       Freelance & Training <ArrowUpRight size={18} />
                     </motion.button>
 
-                    <motion.a
-                      href="/AjayKumarNallamothu.pdf"
-                      download
-                      onClick={() =>
-                        trackEvent({
-                          action: "file_download",
-                          category: "Engagement",
-                          label: "Resume Hero",
-                        })
-                      }
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="px-8 py-4 rounded-2xl border border-brand-green/30 bg-brand-green/5 text-brand-green font-bold flex items-center gap-3 hover:bg-brand-green/10 transition-colors"
-                    >
-                      Download Resume <Download size={18} />
-                    </motion.a>
                   </div>
                 </motion.div>
               </div>
@@ -629,10 +612,10 @@ export default function App() {
                 </div>
 
                 <div className="glass p-8 rounded-3xl">
-                  <h4 className="text-sm font-mono text-white/40 uppercase mb-4 tracking-widest">CMS Ecosystem Expertise</h4>
+                  <h4 className="text-sm font-mono text-text-secondary uppercase mb-4 tracking-widest">CMS Ecosystem Expertise</h4>
                   <div className="flex flex-wrap gap-2">
                     {CMS_EXPERTISE.map(cms => (
-                      <span key={cms} className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium text-white/70 hover:bg-brand-blue/20 hover:border-brand-blue/30 hover:text-white transition-all duration-300 cursor-default">
+                      <span key={cms} className="px-3 py-1 rounded-lg bg-text-primary/5 border border-text-primary/10 text-xs font-medium text-text-secondary hover:bg-brand-blue/20 hover:border-brand-blue/30 hover:text-text-primary transition-all duration-300 cursor-default">
                         {cms}
                       </span>
                     ))}
@@ -718,7 +701,7 @@ export default function App() {
                 </div>
                 <div>
                   <h3 className="text-2xl font-display font-bold mb-2">Global Exploration</h3>
-                  <p className="text-white/50 text-sm">Traveling to new cultures and environments to gain fresh perspectives on problem-solving and life.</p>
+                  <p className="text-text-secondary text-sm">Traveling to new cultures and environments to gain fresh perspectives on problem-solving and life.</p>
                 </div>
               </div>
 
@@ -728,7 +711,7 @@ export default function App() {
                 </div>
                 <div>
                   <h3 className="text-xl font-display font-bold mb-2">Manga & Art</h3>
-                  <p className="text-white/50 text-xs">Appreciating visual storytelling and complex narratives through Japanese manga.</p>
+                  <p className="text-text-secondary text-xs">Appreciating visual storytelling and complex narratives through Japanese manga.</p>
                 </div>
               </div>
 
@@ -738,7 +721,7 @@ export default function App() {
                 </div>
                 <div>
                   <h3 className="text-xl font-display font-bold mb-2">AI Agents</h3>
-                  <p className="text-white/50 text-xs">Experimenting with autonomous agents to automate complex cognitive tasks.</p>
+                  <p className="text-text-secondary text-xs">Experimenting with autonomous agents to automate complex cognitive tasks.</p>
                 </div>
               </div>
 

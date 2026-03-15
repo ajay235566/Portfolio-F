@@ -15,12 +15,12 @@ export const ThemeToggle = ({ theme, toggleTheme }: ThemeToggleProps) => {
       whileTap={{ scale: 0.9 }}
       onClick={toggleTheme}
       className={cn(
-        "p-2 rounded-xl glass transition-colors duration-300",
+        "p-1.5 rounded-xl glass transition-colors duration-300",
         "flex items-center justify-center"
       )}
       aria-label="Toggle theme"
     >
-      <div className="relative w-6 h-6">
+      <div className="relative w-5 h-5">
         <motion.div
           initial={false}
           animate={{
@@ -31,7 +31,7 @@ export const ThemeToggle = ({ theme, toggleTheme }: ThemeToggleProps) => {
           transition={{ duration: 0.3 }}
           className="absolute inset-0"
         >
-          <Sun className="w-6 h-6 text-brand-yellow" />
+          <Sun className="w-5 h-5 text-brand-yellow" />
         </motion.div>
         
         <motion.div
@@ -44,7 +44,7 @@ export const ThemeToggle = ({ theme, toggleTheme }: ThemeToggleProps) => {
           transition={{ duration: 0.3 }}
           className="absolute inset-0"
         >
-          <Moon className="w-6 h-6 text-brand-blue" />
+          <Moon className="w-5 h-5 text-brand-blue" />
         </motion.div>
       </div>
     </motion.button>
