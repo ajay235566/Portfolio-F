@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
-import Lanyard from './Lanyard';
-import { Suspense } from 'react';
+import { SplashLogo } from './SplashLogo';
 
 export const SplashScreen = () => {
   return (
@@ -11,9 +10,7 @@ export const SplashScreen = () => {
       className="fixed inset-0 bg-[#050505] z-[100] flex items-center justify-center overflow-hidden"
     >
       <div className="w-full h-full flex items-center justify-center">
-        <Suspense fallback={null}>
-          <Lanyard position={[0, 0, 32]} gravity={[0, -40, 0]} />
-        </Suspense>
+        <SplashLogo />
       </div>
     </motion.div>
   );

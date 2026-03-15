@@ -30,6 +30,7 @@ import { FramerVector } from './components/FramerVector';
 import { SplashScreen } from './components/SplashScreen';
 import { cn } from './lib/utils';
 import { trackEvent } from './lib/analytics';
+import Hero from "./components/Hero";
 
 // --- Data ---
 
@@ -261,7 +262,7 @@ export default function App() {
       const timer = setTimeout(() => {
         setShowSplash(false);
         sessionStorage.setItem('splash_seen', 'true');
-      }, 5000); // 5 seconds
+      }, 4000); // 4 seconds
       return () => clearTimeout(timer);
     }
   }, [showSplash]);
@@ -279,60 +280,62 @@ export default function App() {
       </AnimatePresence>
       <ParallaxBackground />
 
-      {/* Navigation */}
-      <nav className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300 px-6 py-4",
-        scrolled ? "glass py-3" : "bg-transparent"
-      )}>
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="font-display font-bold text-xl tracking-tighter"
-          >
-            AJAY<span className="text-brand-blue">.</span>KUMAR
-          </motion.div>
+      <main className="relative z-10 transition-opacity duration-1000">
+        {/* Navigation */}
+        <nav className={cn(
+          "fixed top-0 w-full z-50 transition-all duration-300 px-6 py-4",
+          scrolled ? "glass py-3" : "bg-transparent"
+        )}>
+          <div className="max-w-7xl mx-auto flex justify-between items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="font-display font-bold text-xl tracking-tighter"
+            >
+              AJAY<span className="text-brand-blue">.</span>KUMAR
+            </motion.div>
 
-          <div className="hidden md:flex gap-8 text-sm font-medium text-white/70">
-            {['About', 'Experience', 'Skills', 'Projects', 'Freelance', 'Blog'].map((item) => (
-              <a
-                key={item}
-                href={item === 'Blog' ? '#' : `#${item.toLowerCase()}`}
-                className="hover:text-white transition-colors"
+            <div className="hidden md:flex gap-8 text-sm font-medium text-white/70">
+              {['About', 'Experience', 'Skills', 'Projects', 'Freelance', 'Blog'].map((item) => (
+                <a
+                  key={item}
+                  href={item === 'Blog' ? '#' : `#${item.toLowerCase()}`}
+                  className="hover:text-white transition-colors"
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-4">
+              <motion.a
+                href="/AjayKumarNallamothu.pdf"
+                download
+                onClick={() => trackEvent({ action: 'file_download', category: 'Engagement', label: 'Resume Nav' })}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="hidden sm:flex items-center gap-2 text-sm font-bold text-white/70 hover:text-white transition-colors"
               >
-                {item}
-              </a>
-            ))}
+                Resume <Download size={16} />
+              </motion.a>
+              <motion.a
+                href="mailto:ajayignited@gmail.com"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-5 py-2 rounded-full bg-white text-black text-sm font-bold flex items-center gap-2"
+              >
+                Hire Me <ChevronRight size={16} />
+              </motion.a>
+            </div>
           </div>
-
-          <div className="flex items-center gap-4">
-            <motion.a
-              href="/AjayKumarNallamothu.pdf"
-              download
-              onClick={() => trackEvent({ action: 'file_download', category: 'Engagement', label: 'Resume Nav' })}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="hidden sm:flex items-center gap-2 text-sm font-bold text-white/70 hover:text-white transition-colors"
-            >
-              Resume <Download size={16} />
-            </motion.a>
-            <motion.a
-              href="mailto:ajayignited@gmail.com"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-5 py-2 rounded-full bg-white text-black text-sm font-bold flex items-center gap-2"
-            >
-              Hire Me <ChevronRight size={16} />
-            </motion.a>
-          </div>
-        </div>
-      </nav>
-
-      <main className="relative z-10">
+        </nav>
+        {/* Hero Section */}
         {/* Hero Section */}
         <section className="min-h-screen flex flex-col justify-center px-6 pt-20">
           <div className="max-w-7xl mx-auto w-full">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+              {/* Left Side Content */}
               <div className="lg:col-span-7">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
@@ -341,7 +344,9 @@ export default function App() {
                 >
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass mb-6">
                     <ArrowUpRight size={14} className="text-brand-green animate-pulse" />
-                    <span className="text-xs font-mono text-white/70 uppercase tracking-wider">Available for new opportunities</span>
+                    <span className="text-xs font-mono text-white/70 uppercase tracking-wider">
+                      Available for new opportunities
+                    </span>
                   </div>
 
                   <h1 className="text-5xl md:text-8xl font-display font-bold tracking-tight mb-8 leading-[1.1] md:leading-[0.9] flex flex-col">
@@ -352,30 +357,48 @@ export default function App() {
 
                   <p className="text-xl md:text-2xl text-white/60 max-w-2xl mb-10 leading-relaxed">
                     I bridge the gap between complex data tracking and business growth.
-                    Specializing in <span className="text-white">Google Ads</span>, <span className="text-white">Analytics</span>, and <span className="text-white">Automation</span>.
+                    Specializing in <span className="text-white">Google Ads</span>,
+                    <span className="text-white"> Analytics</span>, and
+                    <span className="text-white"> Automation</span>.
                   </p>
 
                   <div className="flex flex-wrap gap-4">
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                      onClick={() =>
+                        document
+                          .getElementById("projects")
+                          ?.scrollIntoView({ behavior: "smooth" })
+                      }
                       className="px-8 py-4 rounded-2xl bg-brand-blue text-white font-bold flex items-center gap-3 shadow-lg shadow-brand-blue/20"
                     >
                       View Projects <Zap size={18} />
                     </motion.button>
+
                     <motion.button
-                      onClick={() => document.getElementById('freelance')?.scrollIntoView({ behavior: 'smooth' })}
+                      onClick={() =>
+                        document
+                          .getElementById("freelance")
+                          ?.scrollIntoView({ behavior: "smooth" })
+                      }
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       className="px-8 py-4 rounded-2xl glass text-white font-bold flex items-center gap-3"
                     >
                       Freelance & Training <ArrowUpRight size={18} />
                     </motion.button>
+
                     <motion.a
                       href="/AjayKumarNallamothu.pdf"
                       download
-                      onClick={() => trackEvent({ action: 'file_download', category: 'Engagement', label: 'Resume Hero' })}
+                      onClick={() =>
+                        trackEvent({
+                          action: "file_download",
+                          category: "Engagement",
+                          label: "Resume Hero",
+                        })
+                      }
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       className="px-8 py-4 rounded-2xl border border-brand-green/30 bg-brand-green/5 text-brand-green font-bold flex items-center gap-3 hover:bg-brand-green/10 transition-colors"
@@ -386,6 +409,7 @@ export default function App() {
                 </motion.div>
               </div>
 
+              {/* Right Side → 3D Lanyard Hero */}
               <div className="lg:col-span-5 relative">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -393,11 +417,10 @@ export default function App() {
                   transition={{ delay: 0.2, duration: 0.8 }}
                   className="w-full relative h-[650px]"
                 >
-                  <div className="w-full h-full absolute inset-0 z-10">
-                    <Scene3D />
-                  </div>
+                  <Hero />
                 </motion.div>
               </div>
+
             </div>
           </div>
         </section>
@@ -639,8 +662,8 @@ export default function App() {
                       <p className="text-sm font-medium text-white/90">{project.impact}</p>
                     </div>
 
-                    <a 
-                      href={project.link} 
+                    <a
+                      href={project.link}
                       onClick={() => trackEvent({ action: 'click', category: 'Project Links', label: project.title })}
                       className="inline-flex items-center gap-2 text-sm font-bold group-hover:text-brand-blue transition-colors"
                     >
