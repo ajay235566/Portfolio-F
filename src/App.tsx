@@ -25,7 +25,6 @@ import {
   Box,
   ShieldCheck
 } from 'lucide-react';
-import { Scene3D } from './components/Scene3D';
 import { FramerVector } from './components/FramerVector';
 import { SplashScreen } from './components/SplashScreen';
 import { cn } from './lib/utils';
@@ -415,7 +414,7 @@ export default function App() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
-                  className="w-full relative h-[650px]"
+                  className="w-full relative h-[650px] translate-y-[50px]"
                 >
                   <Hero />
                 </motion.div>
