@@ -154,15 +154,44 @@ const ParallaxBackground = () => {
 const ContactForm = () => {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
+    
+    const formData = new FormData(e.target as HTMLFormElement);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      message: formData.get('message'),
+    };
+
     trackEvent({
       action: 'generate_lead',
       category: 'Contact',
       label: 'Form Submit'
     });
-    setTimeout(() => setStatus('sent'), 1500);
+
+    try {
+      const response = await fetch('http://localhost:3001/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setStatus('sent');
+      } else {
+        const errorData = await response.json();
+        alert(errorData.error || 'Failed to send message.');
+        setStatus('idle');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Could not connect to the server. Make sure the backend is running.');
+      setStatus('idle');
+    }
   };
 
   return (
@@ -189,6 +218,7 @@ const ContactForm = () => {
                 <input
                   required
                   type="text"
+                  name="name"
                   placeholder="John Doe"
                   className="w-full bg-text-primary/5 border border-text-primary/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-text-primary placeholder:text-text-secondary/30"
                 />
@@ -201,6 +231,7 @@ const ContactForm = () => {
                 <input
                   required
                   type="email"
+                  name="email"
                   placeholder="john@example.com"
                   className="w-full bg-text-primary/5 border border-text-primary/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-text-primary placeholder:text-text-secondary/30"
                 />
@@ -215,6 +246,7 @@ const ContactForm = () => {
             <textarea
               required
               rows={4}
+              name="message"
               placeholder="help me with your queries..."
               className="w-full bg-text-primary/5 border border-text-primary/10 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-brand-blue transition-colors text-text-primary placeholder:text-text-secondary/30 resize-none"
             />
@@ -486,13 +518,13 @@ export default function App() {
                       ))}
                     </ul>
                     <a
-                      href="https://precison-analytics.vercel.app/"
+                      href="https://analytics.ajaynallamothu.co.in"
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => trackEvent({ action: 'click', category: 'Project Links', label: 'Precision Analytics' })}
+                      onClick={() => trackEvent({ action: 'click', category: 'Project Links', label: 'Core Metrics Studio' })}
                       className="inline-flex items-center gap-2 text-brand-blue font-bold hover:underline"
                     >
-                      Visit Precision Analytics <ExternalLink size={16} />
+                      Visit Core Metrics studio <ExternalLink size={16} />
                     </a>
                   </div>
                 </div>
