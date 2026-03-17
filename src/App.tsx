@@ -613,13 +613,15 @@ export default function App() {
                       <p className="text-sm font-medium text-text-primary/90">{project.impact}</p>
                     </div>
 
-                    <a
-                      href={project.link}
-                      onClick={() => trackEvent({ action: 'click', category: 'Project Links', label: project.title })}
-                      className="inline-flex items-center gap-2 text-sm font-bold group-hover:text-brand-blue transition-colors"
-                    >
-                      Project Link <ExternalLink size={16} />
-                    </a>
+                    {project.link && project.link !== '#' && (
+                      <a
+                        href={project.link}
+                        onClick={() => trackEvent({ action: 'click', category: 'Project Links', label: project.title })}
+                        className="inline-flex items-center gap-2 text-sm font-bold group-hover:text-brand-blue transition-colors"
+                      >
+                        Project Link <ExternalLink size={16} />
+                      </a>
+                    )}
                   </div>
                 </motion.div>
               ))}
