@@ -317,16 +317,16 @@ export default function App() {
                   </div>
 
                   <h1 className="text-5xl md:text-8xl font-display font-bold tracking-tight mb-8 leading-[1.1] md:leading-[0.9] flex flex-col">
-                    <span>SUBJECT</span>
-                    <span className="text-gradient">MATTER</span>
+                    <span>WEB</span>
+                    <span className="text-gradient">ANALYTICS</span>
                     <span>EXPERT</span>
                   </h1>
 
                   <p className="text-xl md:text-2xl text-text-secondary max-w-2xl mb-10 leading-relaxed">
-                    I bridge the gap between complex data tracking and business growth.
-                    Specializing in <span className="text-text-primary">Google Ads</span>,
-                    <span className="text-text-primary"> Analytics</span>, and
-                    <span className="text-text-primary"> Automation</span>.
+                    I bridge the gap between complex data and business growth.
+                    Specializing in <span className="text-text-primary">Google Ads tracking</span>,
+                    <span className="text-text-primary"> analytics tracking</span>, and advanced
+                    <span className="text-text-primary"> web tracking</span> solutions.
                   </p>
 
                   <div className="flex flex-wrap gap-4">
@@ -390,8 +390,8 @@ export default function App() {
               <SectionHeading subtitle="The Strategy">About Me</SectionHeading>
               <div className="space-y-6 text-lg text-text-secondary leading-relaxed">
                 <p>
-                  I am a results-driven <span className="text-text-primary font-medium">Technical Consultant</span> specializing in advanced measurement strategy and implementation.
-                  My expertise lies in architecting robust tracking solutions that bridge the gap between raw data and actionable business intelligence.
+                  I am a results-driven <span className="text-text-primary font-medium">Web Analytics Expert</span> specializing in advanced measurement strategy and implementation.
+                  My expertise lies in architecting robust <span className="text-text-primary font-medium">web tracking</span> and <span className="text-text-primary font-medium">Google Ads tracking</span> solutions that bridge the gap between raw data and actionable business intelligence.
                 </p>
                 <p>
                   Currently, I serve as a <span className="text-text-primary font-medium">Subject Matter Expert</span> at Cognizant, where I consult for global clients on complex tracking ecosystems.
