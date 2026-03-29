@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'motion/react';
-import { SplashScreen } from './SplashScreen';
+import LanyardSplash from './LanyardSplash';
 import { Navbar } from './Navbar';
 import { trackEvent } from '../lib/analytics';
 
@@ -47,26 +47,25 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     return true;
   });
 
-  useEffect(() => {
-    if (showSplash) {
-      const timer = setTimeout(() => {
-        setShowSplash(false);
-        sessionStorage.setItem('splash_seen', 'true');
-      }, 4000);
-      return () => clearTimeout(timer);
-    }
-  }, [showSplash]);
+  // Splash screen is now interaction-driven. User must drag the lanyard to enter.
+
+  if (showSplash) {
+    return (
+      <div className="fixed inset-0 w-[100vw] h-[100vh] z-[999999] bg-[#050505] overflow-hidden m-0 p-0">
+        <LanyardSplash 
+          onComplete={() => {
+            setShowSplash(false);
+            sessionStorage.setItem('splash_seen', 'true');
+          }} 
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-bg-primary text-text-primary transition-colors duration-300">
-      <AnimatePresence mode="wait">
-        {showSplash && <SplashScreen key="splash" />}
-      </AnimatePresence>
-      
       <ParallaxBackground />
-      
       <Navbar theme={theme} toggleTheme={toggleTheme} />
-      
       <main className="relative z-10">
         {children}
       </main>
