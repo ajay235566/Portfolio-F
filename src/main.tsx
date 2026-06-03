@@ -10,9 +10,21 @@ function Main() {
   const [route, setRoute] = useState(window.location.hash);
 
   useEffect(() => {
+    let lastRoute = window.location.hash;
     const handleHashChange = () => {
-      setRoute(window.location.hash);
-      window.scrollTo(0, 0); // Reset scroll on route change
+      const newRoute = window.location.hash;
+      setRoute(newRoute);
+      
+      const PAGE_ROUTES = ['#gtm-consent-template', '#blog'];
+      const wasPage = PAGE_ROUTES.includes(lastRoute);
+      const isPage = PAGE_ROUTES.includes(newRoute);
+      
+      // Only reset scroll to top if we are transitioning to/from a separate page route
+      if (wasPage || isPage) {
+        window.scrollTo(0, 0);
+      }
+      
+      lastRoute = newRoute;
     };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
