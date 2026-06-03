@@ -31,8 +31,8 @@ const Lanyard3D = () => {
                                 Ajay Kumar Nallamothu
                             </h1>
 
-                            <p className="text-gray-500 text-sm mb-3">
-                                Subject Matter Expert
+                            <p className="text-gray-500 text-xs mb-3">
+                                Digital Media Senior Associate
                             </p>
 
                             <img

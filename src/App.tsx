@@ -52,8 +52,21 @@ const CMS_EXPERTISE = [
 
 const EXPERIENCE = [
   {
+    company: 'Google Operation Center',
+    role: 'Digital Media Senior Associate',
+    period: '2026 Mar - Present',
+    description: 'Managed the implementation and troubleshooting of Floodlight tags, container logic audits within GTM, and cross-engine reporting in SA360.',
+    highlights: [
+      'End-to-End Floodlight: Managed the implementation and troubleshooting of Floodlight tags (Counter and Sales) to ensure accurate conversion attribution across complex digital ecosystems.',
+      'Technical Troubleshooting: Resolved pixel firing issues and tag discrepancies by auditing container logic within Google Tag Manager and verifying real-time hits using browser developer tools.',
+      'Attribution Integrity: Audited placement-level tracking and event-tag configurations to minimize data leakage and ensure 100% visibility into the customer journey.',
+      'Cross-Engine Reporting: Engineered comprehensive reports in SA360 to consolidate performance metrics across Google Ads, Bing, and Baidu, providing a unified view of search ROI.'
+    ]
+  },
+  {
     company: 'Cognizant',
     role: 'Subject Matter Expert',
+    period: '2024 Jan - 2026 Mar',
     description: 'Consulting for Google client projects (GCARE & GTECH). Specialized in architecting complex conversion tracking, GTM, and GA4 ecosystems.',
     highlights: [
       'Architected end-to-end conversion tracking strategies for high-value Google Ads clients.',
@@ -67,6 +80,7 @@ const EXPERIENCE = [
   {
     company: 'ZoomRX',
     role: 'Business Analyst Associate',
+    period: 'June 2020 - Sept 2020',
     description: 'Analyzed market trends and drug performance data for US-based pharmaceutical stakeholders.',
     highlights: [
       'Utilized Excel and Tableau for advanced data visualization and strategic reporting.',
@@ -394,7 +408,7 @@ export default function App() {
                   My expertise lies in architecting robust <span className="text-text-primary font-medium">web tracking</span> and <span className="text-text-primary font-medium">Google Ads tracking</span> solutions that bridge the gap between raw data and actionable business intelligence.
                 </p>
                 <p>
-                  Currently, I serve as a <span className="text-text-primary font-medium">Subject Matter Expert</span> at Cognizant, where I consult for global clients on complex tracking ecosystems.
+                  Currently, I serve as a <span className="text-text-primary font-medium">Digital Media Senior Associate</span> at Google Operation Center, specializing in end-to-end Floodlight implementations, GTM container auditing, and conversion attribution across complex digital ecosystems.
                   My technical depth extends across all major CMS platforms including <span className="text-text-primary">Shopify, WordPress, Wix, Squarespace, and Magento</span>.
                 </p>
                 <p>
@@ -434,6 +448,9 @@ export default function App() {
                     <div className="lg:col-span-4">
                       <h3 className="text-2xl font-display font-bold">{exp.company}</h3>
                       <p className="text-text-primary font-medium">{exp.role}</p>
+                      {exp.period && (
+                        <p className="text-sm font-mono text-text-secondary mt-2">{exp.period}</p>
+                      )}
                     </div>
                     <div className="lg:col-span-8">
                       <p className="text-text-primary/80 mb-6">{exp.description}</p>
