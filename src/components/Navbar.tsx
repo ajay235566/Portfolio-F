@@ -19,7 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = ['About', 'Experience', 'Skills', 'Projects', 'Freelance', 'Blog'];
+  const navItems = ['About', 'Experience', 'Skills', 'Projects', 'Freelance', 'Blog', 'ASCII Video'];
 
   return (
     <nav className={cn(
@@ -41,7 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           {navItems.map((item) => (
             <a
               key={item}
-              href={item === 'Blog' ? '#blog' : `#${item.toLowerCase()}`}
+              href={item === 'Blog' ? '#blog' : item === 'ASCII Video' ? '#ascii-video' : `#${item.toLowerCase()}`}
               className="hover:text-text-primary transition-colors"
             >
               {item}

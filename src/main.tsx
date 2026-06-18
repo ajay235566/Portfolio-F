@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import ConsentDocs from './pages/ConsentDocs.tsx';
 import Blog from './pages/Blog.tsx';
+import AsciiVideo from './pages/AsciiVideo.tsx';
 import { Layout } from './components/Layout';
 import './index.css';
 
@@ -15,7 +16,7 @@ function Main() {
       const newRoute = window.location.hash;
       setRoute(newRoute);
       
-      const PAGE_ROUTES = ['#gtm-consent-template', '#blog'];
+      const PAGE_ROUTES = ['#gtm-consent-template', '#blog', '#ascii-video'];
       const wasPage = PAGE_ROUTES.includes(lastRoute);
       const isPage = PAGE_ROUTES.includes(newRoute);
       
@@ -35,6 +36,8 @@ function Main() {
     content = <ConsentDocs />;
   } else if (route === '#blog') {
     content = <Blog />;
+  } else if (route === '#ascii-video') {
+    content = <AsciiVideo />;
   } else {
     content = <App />;
   }
