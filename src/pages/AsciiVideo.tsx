@@ -58,7 +58,7 @@ export default function AsciiVideo() {
     const startDownload = async () => {
       setLoadingStep('downloading');
       try {
-        const response = await fetch('/ascii-stream-raw-1781786208168.json');
+        const response = await fetch('/ascii-stream.json');
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -205,52 +205,35 @@ export default function AsciiVideo() {
       for (let c = 0; c < cols; c++) {
         const idx = r * cols + c;
         const char = frame.chars[idx];
-        const color = frame.colors[idx];
+        
+        // Extract 6-character hex color
+        const colorHex = frame.colors.substring(idx * 6, idx * 6 + 6);
+        const color = `#${colorHex}`;
 
         if (!char || char === ' ') continue;
 
         // Visual mode color transformation
         if (colorMode === 'color') {
           ctx.fillStyle = color;
-        } else if (colorMode === 'matrix') {
-          const match = color.match(/\d+/g);
-          if (match) {
-            const [red, green, blue] = match.map(Number);
-            const intensity = (red * 0.299 + green * 0.587 + blue * 0.114) / 255;
+        } else {
+          const red = parseInt(colorHex.substring(0, 2), 16);
+          const green = parseInt(colorHex.substring(2, 4), 16);
+          const blue = parseInt(colorHex.substring(4, 6), 16);
+          const intensity = (red * 0.299 + green * 0.587 + blue * 0.114) / 255;
+
+          if (colorMode === 'matrix') {
             ctx.fillStyle = `rgb(0, ${Math.floor(80 + intensity * 175)}, 0)`;
-          } else {
-            ctx.fillStyle = '#00ff00';
-          }
-        } else if (colorMode === 'amber') {
-          const match = color.match(/\d+/g);
-          if (match) {
-            const [red, green, blue] = match.map(Number);
-            const intensity = (red * 0.299 + green * 0.587 + blue * 0.114) / 255;
+          } else if (colorMode === 'amber') {
             ctx.fillStyle = `rgb(${Math.floor(180 + intensity * 75)}, ${Math.floor(110 + intensity * 110)}, 0)`;
-          } else {
-            ctx.fillStyle = '#ffb000';
-          }
-        } else if (colorMode === 'grayscale') {
-          const match = color.match(/\d+/g);
-          if (match) {
-            const [red, green, blue] = match.map(Number);
-            const intensity = Math.floor(red * 0.299 + green * 0.587 + blue * 0.114);
-            ctx.fillStyle = `rgb(${intensity}, ${intensity}, ${intensity})`;
-          } else {
-            ctx.fillStyle = '#ffffff';
-          }
-        } else if (colorMode === 'neon') {
-          const match = color.match(/\d+/g);
-          if (match) {
-            const [red, green, blue] = match.map(Number);
-            // warm tone -> pink/magenta, cool tone -> cyan/blue
+          } else if (colorMode === 'grayscale') {
+            const grayVal = Math.floor(red * 0.299 + green * 0.587 + blue * 0.114);
+            ctx.fillStyle = `rgb(${grayVal}, ${grayVal}, ${grayVal})`;
+          } else if (colorMode === 'neon') {
             if (red > blue) {
               ctx.fillStyle = '#ff007f'; // cyber pink
             } else {
               ctx.fillStyle = '#00ffff'; // cyber cyan
             }
-          } else {
-            ctx.fillStyle = '#ff007f';
           }
         }
 
@@ -287,7 +270,7 @@ export default function AsciiVideo() {
     const logs = [
       "SYSTEM: RENDER BOOT SEQUENCE INITIATED",
       "NETWORK: CONFIGURING SECURE CHANNEL...",
-      `ASSET: PULLING "/ascii-stream-raw-1781786208168.json" FROM PORTAL...`,
+      `ASSET: PULLING "/ascii-stream.json" FROM PORTAL...`,
     ];
 
     if (loadingStep === 'downloading' || loadingStep === 'parsing' || loadingStep === 'complete') {
@@ -633,7 +616,7 @@ export default function AsciiVideo() {
                     </div>
                     <div className="flex justify-between border-b border-white/5 pb-2">
                       <span>MEM LOAD:</span>
-                      <span className="text-text-primary font-bold">107.56 MB</span>
+                      <span className="text-text-primary font-bold">21.86 MB</span>
                     </div>
                     <div className="flex justify-between border-b border-white/5 pb-2">
                       <span>NATIVE FPS:</span>

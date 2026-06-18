@@ -6,3 +6,7 @@ coverage/
 *.log
 .env*
 !.env.example
+compress.js
+compress.cjs
+public/ascii-stream-raw-1781786208168.json
+
