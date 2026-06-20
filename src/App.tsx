@@ -734,7 +734,7 @@ export default function App() {
                   <a href="mailto:ajayignited@gmail.com" onClick={() => trackEvent({ action: 'click', category: 'Outbound Link', label: 'Email' })} className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
                     <Mail size={24} className="group-hover:scale-110 transition-transform" />
                   </a>
-                  <a href="https://linkedin.com" onClick={() => trackEvent({ action: 'click', category: 'Outbound Link', label: 'LinkedIn' })} target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
+                  <a href="https://www.linkedin.com/in/ajay-kumar-nallamothu-0206593b8" onClick={() => trackEvent({ action: 'click', category: 'Outbound Link', label: 'LinkedIn' })} target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
                     <Linkedin size={24} className="group-hover:scale-110 transition-transform" />
                   </a>
                   <a href="tel:+919952917578" onClick={() => trackEvent({ action: 'click', category: 'Outbound Link', label: 'Phone' })} className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-brand-blue transition-colors group">
