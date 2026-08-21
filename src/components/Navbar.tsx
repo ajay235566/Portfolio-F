@@ -19,7 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = ['About', 'Experience', 'Skills', 'Projects', 'Freelance', 'Blog', 'ASCII Video'];
+  const navItems = ['About', 'Experience', 'Skills', 'Projects', 'Freelance', 'Blog'];
 
   return (
     <nav className={cn(
@@ -36,12 +36,12 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         >
           AJAY<span className="text-brand-blue">.</span>KUMAR
         </motion.div>
-
+ 
         <div className="hidden md:flex gap-8 text-sm font-medium text-text-secondary">
           {navItems.map((item) => (
             <a
               key={item}
-              href={item === 'Blog' ? '#blog' : item === 'ASCII Video' ? '#ascii-video' : `#${item.toLowerCase()}`}
+              href={item === 'Blog' ? '#blog' : `#${item.toLowerCase()}`}
               className="hover:text-text-primary transition-colors"
             >
               {item}
