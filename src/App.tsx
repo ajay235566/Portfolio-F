@@ -54,7 +54,6 @@ const EXPERIENCE = [
   {
     company: 'Conde Nast',
     role: 'Analyst, Technical Analytics & Measurement',
-    period: '2026 Jun - Present',
     description: 'Designed robust data layers and event schemas to enable analytics ingestion pipelines and track user behavior across digital platforms.',
     highlights: [
       'GTM360 & Snowplow Pipelines: Orchestrated GTM360 setup and Snowplow schema design to stream user interaction data from the website to Databricks.',
@@ -65,7 +64,6 @@ const EXPERIENCE = [
   {
     company: 'Google Operation Center',
     role: 'Digital Media Senior Associate',
-    period: '2026 Mar - 2026 Jun',
     description: 'Managed the implementation and troubleshooting of Floodlight tags, container logic audits within GTM, and cross-engine reporting in SA360.',
     highlights: [
       'End-to-End Floodlight: Managed the implementation and troubleshooting of Floodlight tags (Counter and Sales) to ensure accurate conversion attribution across complex digital ecosystems.',
@@ -77,7 +75,6 @@ const EXPERIENCE = [
   {
     company: 'Cognizant',
     role: 'Subject Matter Expert',
-    period: '2024 Jan - 2026 Mar',
     description: 'Consulting for Google client projects (GCARE & GTECH). Specialized in architecting complex conversion tracking, GTM, and GA4 ecosystems.',
     highlights: [
       'Architected end-to-end conversion tracking strategies for high-value Google Ads clients.',
@@ -91,7 +88,6 @@ const EXPERIENCE = [
   {
     company: 'ZoomRX',
     role: 'Business Analyst Associate',
-    period: 'June 2020 - Sept 2020',
     description: 'Analyzed market trends and drug performance data for US-based pharmaceutical stakeholders.',
     highlights: [
       'Utilized Excel and Tableau for advanced data visualization and strategic reporting.',
@@ -481,9 +477,6 @@ export default function App() {
                   <div className="lg:col-span-4">
                     <h3 className="text-2xl font-display font-bold">{exp.company}</h3>
                     <p className="text-text-primary font-medium">{exp.role}</p>
-                    {exp.period && (
-                      <p className="text-sm font-mono text-text-secondary mt-2">{exp.period}</p>
-                    )}
                   </div>
                   <div className="lg:col-span-8">
                     <p className="text-text-primary/80 mb-6">{exp.description}</p>
