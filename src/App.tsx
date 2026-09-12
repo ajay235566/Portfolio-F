@@ -54,11 +54,14 @@ const EXPERIENCE = [
   {
     company: 'Conde Nast',
     role: 'Analyst, Technical Analytics & Measurement',
-    description: 'Designed robust data layers and event schemas to enable analytics ingestion pipelines and track user behavior across digital platforms.',
+    description: 'Orchestrated enterprise behavioral data infrastructure, Snowplow streaming pipelines, and custom data layer architectures across global digital brands, integrating web and mobile app telemetry directly into Databricks lakehouse.',
     highlights: [
-      'GTM360 & Snowplow Pipelines: Orchestrated GTM360 setup and Snowplow schema design to stream user interaction data from the website to Databricks.',
-      'Datalayer Architecture: Designed structured data layers aligned with feature launches by the engineering team to track user behaviors and trace customer journeys.',
-      'Consent & Tag Management: Deployed and audited third-party tags (including TikTok, Meta Pixels, Rakuten Image, Parsely, etc.) aligned with strict user consent frameworks.'
+      'Databricks & SQL Data Extraction: Extracted, queried, and validated large-scale clickstream datasets from Databricks using advanced SQL, performing deep data integrity audits, user journey reconciliations, and ad-hoc analysis.',
+      'Pipeline Ingestion & Collector Setup: Managed multi-brand event streaming pipelines, configuring and provisioning new Snowplow collectors and endpoints for brand sites and new client properties.',
+      'Pipeline Troubleshooting & Event Recovery: Monitored real-time ingestion streams, triaged and debugged failed event queues, investigated schema validation errors, and re-triggered pipeline backfills to maintain zero data loss.',
+      'Web & App Schema Design: Architected robust event tracking schemas (Snowplow/JSON) for both web and mobile apps, establishing standardized event taxonomies for content consumption, subscriptions, and interactions.',
+      'Cross-Functional Pre- & Post-Launch QA: Collaborated closely with engineering, product, and QA teams across sprint cycles to review technical specs, validate schema designs pre-launch, and execute post-launch production audits.',
+      'Data Layer & Consent Governance: Designed structured, event-driven data layers for engineering feature launches and governed third-party tag deployments (Meta, TikTok, Rakuten, Parsely) under strict privacy frameworks.'
     ]
   },
   {
