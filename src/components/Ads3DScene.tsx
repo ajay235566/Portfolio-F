@@ -1,181 +1,228 @@
-import React, { useRef, useMemo, useState } from 'react';
+import React, { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Float, Sphere, Torus, Html } from '@react-three/drei';
+import { OrbitControls, Float, Torus, Html } from '@react-three/drei';
 import * as THREE from 'three';
 
 export type PlatformFilter = 'all' | 'google' | 'meta';
 
-export interface NodeData {
-  id: string;
+export interface FunnelStage {
+  id: number;
+  slug: string;
   name: string;
-  platform: 'google' | 'meta' | 'core';
-  position: [number, number, number];
+  subtitle: string;
+  yPos: number;
+  radiusTop: number;
+  radiusBottom: number;
+  height: number;
   color: string;
-  category: string;
-  details: string;
+  glowColor: string;
+  tags: string[];
+  parameters: { key: string; val: string; desc: string }[];
+  description: string;
+  codeSnippet: string;
 }
 
-export const NODES: NodeData[] = [
-  // Core Gateway
+export const FUNNEL_STAGES: FunnelStage[] = [
   {
-    id: 'sgtm',
-    name: 'Server-Side GTM Hub',
-    platform: 'core',
-    position: [0, 0, 0],
-    color: '#34A853',
-    category: 'Cloud Pipeline',
-    details: 'Cloud Ingestion Engine • First-Party Context • ITP & AdBlock Resilient'
-  },
-  {
-    id: 'consent',
-    name: 'Consent Mode v2',
-    platform: 'core',
-    position: [0, 2.3, 0],
-    color: '#FBBC05',
-    category: 'Privacy Engine',
-    details: 'ad_storage & ad_user_data signal validator'
-  },
-  {
-    id: 'identity',
-    name: 'SHA-256 Hash Engine',
-    platform: 'core',
-    position: [0, -2.2, 0],
+    id: 1,
+    slug: 'ad-click',
+    name: 'Stage 1: Paid Acquisition & Click Ingestion',
+    subtitle: 'Google Ads (Search/PMax) & Meta Ads (Feed/Reels)',
+    yPos: 2.6,
+    radiusTop: 4.4,
+    radiusBottom: 3.3,
+    height: 1.4,
     color: '#4285F4',
-    category: 'Encryption',
-    details: 'Normalization & client-side encryption of user identities'
-  },
+    glowColor: '#0081FB',
+    tags: ['Google Ads', 'Meta Ads', 'gclid', 'fbclid', 'wbraid'],
+    parameters: [
+      { key: 'gclid', val: 'Cj0KCQjwm5e5Bh...', desc: 'Google Click Identifier for server-side attribution' },
+      { key: 'fbclid', val: 'IwAR2X948J_k8f...', desc: 'Meta Click Identifier stored in _fbc first-party cookie' },
+      { key: 'wbraid / gbraid', val: 'CjkKCQjwm5...', desc: 'App-to-web privacy modeled click IDs for iOS 14.5+' },
+      { key: 'utm_campaign', val: 'pmax_summer_26', desc: 'Campaign taxonomy mapping across SA360 & Meta' }
+    ],
+    description: 'High-volume paid traffic arrives from Google Search, Display, YouTube, Performance Max, Instagram Reels, and Facebook Feeds. Ingests raw click IDs into browser session memory.',
+    codeSnippet: `// Step 1: Capture Raw Click IDs from URL Query Params
+const urlParams = new URLSearchParams(window.location.search);
+const gclid = urlParams.get('gclid');
+const fbclid = urlParams.get('fbclid');
 
-  // Google Ads Cluster
-  {
-    id: 'g-pmax',
-    name: 'Google Ads PMax & Search',
-    platform: 'google',
-    position: [-4.2, 1.8, 0],
-    color: '#4285F4',
-    category: 'Paid Search',
-    details: 'Auto-tagging gclid capture & Value-Based Bidding'
+// Persist in true first-party domain cookies (180-day retention)
+if (gclid) document.cookie = \`_gcl_aw=\${gclid}; path=/; SameSite=Lax; max-age=15552000\`;
+if (fbclid) document.cookie = \`_fbc=fb.1.\${Date.now()}.\${fbclid}; path=/; SameSite=Lax; max-age=15552000\`;`
   },
   {
-    id: 'g-enhanced',
-    name: 'Enhanced Conversions API',
-    platform: 'google',
-    position: [-3.8, -1.5, 1],
-    color: '#EA4335',
-    category: 'Conversion Tracking',
-    details: 'First-party customer data hashed matching directly to Google Ads'
-  },
-  {
-    id: 'g-floodlight',
-    name: 'SA360 & CM360 Floodlight',
-    platform: 'google',
-    position: [-4.8, 0.2, -1.2],
+    id: 2,
+    slug: 'client-consent',
+    name: 'Stage 2: Client Web Layer & Consent Engine',
+    subtitle: 'GTM Web Container, First-Party Cookies & Consent Mode v2',
+    yPos: 0.9,
+    radiusTop: 3.1,
+    radiusBottom: 2.1,
+    height: 1.4,
     color: '#34A853',
-    category: 'Enterprise Ads',
-    details: 'Counter & Sales tags with custom u1-u20 metric dimensions'
-  },
-  {
-    id: 'g-oci',
-    name: 'Offline Conversions (OCI)',
-    platform: 'google',
-    position: [-2.5, -2.8, -0.8],
-    color: '#FBBC05',
-    category: 'CRM Integration',
-    details: 'CRM closed-won attribution synced via BigQuery & GTM'
-  },
+    glowColor: '#FBBC05',
+    tags: ['GTM Web', 'Consent Mode v2', '_fbp', '_fbc', 'Datalayer'],
+    parameters: [
+      { key: 'ad_storage', val: 'granted', desc: 'Controls cookie storage for advertising' },
+      { key: 'ad_user_data', val: 'granted', desc: 'Allows user data to be transmitted to Google for ads' },
+      { key: 'ad_personalization', val: 'granted', desc: 'Controls remarketing audience eligibility' },
+      { key: '_fbp', val: 'fb.1.1729482910.8491', desc: 'Meta Browser ID preserved for cross-session attribution' }
+    ],
+    description: 'The web GTM container audits consent state signals before executing any measurement tag. Standardizes structured ecommerce datalayers and generates persistent first-party identifiers.',
+    codeSnippet: `// Step 2: Consent Mode v2 Initialization & Datalayer Push
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
 
-  // Meta Ads Cluster
-  {
-    id: 'm-pixel',
-    name: 'Meta Web Pixel',
-    platform: 'meta',
-    position: [4.2, 1.8, 0],
-    color: '#0081FB',
-    category: 'Client Layer',
-    details: 'Browser-side event capture with fbclid & fbp cookie storage'
+gtag('consent', 'default', {
+  'ad_storage': 'granted',
+  'ad_user_data': 'granted',
+  'ad_personalization': 'granted',
+  'analytics_storage': 'granted',
+  'wait_for_update': 500
+});
+
+// Push normalized purchase event with unique event_id
+dataLayer.push({
+  event: 'purchase',
+  event_id: 'order_ORD-2026-99214',
+  ecommerce: { transaction_id: 'ORD-2026-99214', value: 349.00, currency: 'USD' }
+});`
   },
   {
-    id: 'm-capi',
-    name: 'Conversions API (CAPI)',
-    platform: 'meta',
-    position: [3.8, -1.5, 1],
-    color: '#00C6FF',
-    category: 'Server Layer',
-    details: 'Server-to-Server direct Graph API streaming via Cloud Run'
-  },
-  {
-    id: 'm-dedup',
-    name: 'Event Deduplication',
-    platform: 'meta',
-    position: [4.8, 0.2, -1.2],
+    id: 3,
+    slug: 'server-encryption',
+    name: 'Stage 3: Server-Side Processing & Encryption',
+    subtitle: 'Server GTM (sGTM), Cloud Run & SHA-256 Hashing',
+    yPos: -0.8,
+    radiusTop: 1.9,
+    radiusBottom: 1.1,
+    height: 1.4,
     color: '#8A2BE2',
-    category: 'Attribution Guard',
-    details: 'Unique event_id matching ensures zero duplicate conversion reporting'
+    glowColor: '#00C6FF',
+    tags: ['sGTM', 'Cloud Run', 'SHA-256', 'ITP Bypass', 'Adblock Proof'],
+    parameters: [
+      { key: 'sha256(email)', val: '7a38b31a89c22e4c029...', desc: 'Normalized (trimmed, lowercase) SHA-256 email hash' },
+      { key: 'sha256(phone)', val: '8c48e02d8471e892c90...', desc: 'E.164 formatted hashed customer phone number' },
+      { key: 'client_ip_address', val: '198.51.100.42', desc: 'Server-extracted clean IP address' },
+      { key: 'client_user_agent', val: 'Mozilla/5.0 (iPhone...', desc: 'Server-verified hardware user agent string' }
+    ],
+    description: 'Server GTM on Google Cloud Run intercepts browser hits. Validates, strips sensitive PII, securely hashes customer emails and phones using SHA-256, and enriches payloads with server IP and user agent.',
+    codeSnippet: `// Step 3: Server GTM Cryptographic Hashing Transformation
+// Input: "  John.Doe@Gmail.com " -> Output: sha256("john.doe@gmail.com")
+const normalizeEmail = (raw) => raw.trim().toLowerCase();
+const hashedEmail = sha256(normalizeEmail(eventModel.customer_email));
+
+const serverPayload = {
+  event_id: eventModel.event_id,
+  user_data: {
+    sha256_email_address: hashedEmail,
+    client_ip_address: request.ip,
+    client_user_agent: request.headers['user-agent']
+  }
+};`
   },
   {
-    id: 'm-emq',
-    name: 'Advanced Matching (9.0+ EMQ)',
-    platform: 'meta',
-    position: [2.5, -2.8, -0.8],
-    color: '#E0245E',
-    category: 'Signal Match Quality',
-    details: 'Hashed email, phone, external_id parameters for maximal match rate'
+    id: 4,
+    slug: 'api-dispatch',
+    name: 'Stage 4: Direct API Dispatch & Deduplication',
+    subtitle: 'Google Enhanced Conversions API & Meta Graph CAPI',
+    yPos: -2.5,
+    radiusTop: 0.95,
+    radiusBottom: 0.35,
+    height: 1.4,
+    color: '#00E5FF',
+    glowColor: '#34A853',
+    tags: ['Google Ads API', 'Meta CAPI', 'Event Deduplication', 'SA360 Floodlight'],
+    parameters: [
+      { key: 'match_status', val: 'MATCHED_VERIFIED', desc: 'Direct server-to-server match confirmation' },
+      { key: 'dedup_window', val: '48 Hours', desc: 'Browser pixel + Server CAPI deduplicated via event_id' },
+      { key: 'emq_score', val: '9.2 / 10', desc: 'Meta Event Match Quality in top 5% of all advertisers' },
+      { key: 'sa360_floodlight', val: 'Counter & Sales Tag Sync', desc: 'Real-time conversion postback to SA360 engine' }
+    ],
+    description: 'Direct server-to-server dispatch to Google Ads Conversion API and Meta Graph API. The shared event_id guarantees 100% deduplication between client pixel and server stream, unlocking optimal smart bidding.',
+    codeSnippet: `// Step 4: Dispatch to Meta Graph API & Google Ads API
+// Meta Graph API POST
+fetch('https://graph.facebook.com/v20.0/' + pixelId + '/events?access_token=' + capiToken, {
+  method: 'POST',
+  body: JSON.stringify({ data: [metaCapiPayload] })
+});
+
+// Google Ads API Enhanced Conversion Upload
+googleAdsClient.conversionUploads.uploadCallConversions({
+  customerId: '847-291-0394',
+  conversions: [googleEnhancedConversionPayload]
+});`
   }
 ];
 
-// Data Flow Pulses traveling along curves
-const DataPulses = ({ filter }: { filter: PlatformFilter }) => {
-  const count = 36;
+// Cascading particle waterfall passing through the funnel
+const FunnelParticles = ({
+  activeStageId,
+  isBursting,
+  filter
+}: {
+  activeStageId: number;
+  isBursting: boolean;
+  filter: PlatformFilter;
+}) => {
+  const count = 160;
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
-  // Predefine curves from nodes to center
-  const paths = useMemo(() => {
-    return NODES.filter(n => n.platform !== 'core').map(n => {
-      const start = new THREE.Vector3(...n.position);
-      const end = new THREE.Vector3(0, 0, 0);
-      const mid = new THREE.Vector3(
-        (start.x + end.x) / 2,
-        (start.y + end.y) / 2 + (start.x < 0 ? 0.8 : -0.8),
-        (start.z + end.z) / 2 + 0.5
-      );
-      return {
-        curve: new THREE.QuadraticBezierCurve3(start, mid, end),
-        platform: n.platform,
-        color: new THREE.Color(n.color)
-      };
-    });
-  }, []);
-
-  const pulseData = useMemo(() => {
+  // Generate particle parameters: start angle, radius ratio, speed, vertical progress
+  const particles = useMemo(() => {
     return Array.from({ length: count }, (_, i) => ({
-      pathIndex: i % paths.length,
-      progress: (i / count) + Math.random() * 0.1,
-      speed: 0.25 + (i % 5) * 0.05,
+      angle: (i / count) * Math.PI * 2 + Math.random() * 0.2,
+      angularSpeed: 0.8 + Math.random() * 1.5,
+      y: (i / count) * 6.5 - 3.2, // spans from +3.3 down to -3.2
+      baseSpeed: 0.8 + Math.random() * 0.8,
+      wobble: Math.random() * Math.PI * 2,
+      platform: i % 2 === 0 ? 'google' : 'meta'
     }));
-  }, [paths, count]);
+  }, [count]);
 
   useFrame((_, delta) => {
     if (!meshRef.current) return;
 
-    pulseData.forEach((pulse, i) => {
-      const pathObj = paths[pulse.pathIndex];
-      const isVisible = filter === 'all' || filter === pathObj.platform;
+    const speedMultiplier = isBursting ? 3.0 : 1.0;
 
-      if (!isVisible) {
-        dummy.scale.set(0, 0, 0);
-        dummy.updateMatrix();
-        meshRef.current!.setMatrixAt(i, dummy.matrix);
-        return;
+    particles.forEach((p, i) => {
+      // Progress downwards
+      p.y -= delta * p.baseSpeed * speedMultiplier;
+      p.angle += delta * p.angularSpeed;
+
+      // Reset to top when passing bottom
+      if (p.y < -3.5) {
+        p.y = 3.4;
       }
 
-      pulse.progress = (pulse.progress + delta * pulse.speed) % 1;
-      const point = pathObj.curve.getPoint(pulse.progress);
+      // Compute radius of funnel at this y-coordinate
+      // Y goes from +3.3 (radius ~4.2) down to -3.2 (radius ~0.4)
+      const normalizedY = (p.y + 3.2) / 6.5; // 0 at bottom, 1 at top
+      const clampedNormY = Math.max(0, Math.min(1, normalizedY));
+      // Non-linear funnel taper curve
+      const funnelRadius = 0.35 + Math.pow(clampedNormY, 1.2) * 3.7;
 
-      dummy.position.copy(point);
-      const pulseScale = Math.sin(pulse.progress * Math.PI) * 0.14 + 0.05;
-      dummy.scale.set(pulseScale, pulseScale, pulseScale);
+      const currentRadius = funnelRadius * (0.65 + Math.sin(p.wobble + p.y * 3) * 0.25);
+      const x = Math.cos(p.angle) * currentRadius;
+      const z = Math.sin(p.angle) * currentRadius;
+
+      dummy.position.set(x, p.y, z);
+
+      // Check visibility by filter
+      const isVisible = filter === 'all' || filter === p.platform;
+      if (!isVisible) {
+        dummy.scale.set(0, 0, 0);
+      } else {
+        // Particle glows larger when passing through the active stage
+        const activeStage = FUNNEL_STAGES.find(s => s.id === activeStageId);
+        const isNearActiveStage = activeStage && Math.abs(p.y - activeStage.yPos) < 0.8;
+        const scale = isNearActiveStage ? (isBursting ? 0.22 : 0.16) : 0.08;
+        dummy.scale.set(scale, scale, scale);
+      }
+
       dummy.updateMatrix();
-
       meshRef.current!.setMatrixAt(i, dummy.matrix);
     });
 
@@ -184,11 +231,11 @@ const DataPulses = ({ filter }: { filter: PlatformFilter }) => {
 
   return (
     <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
-      <sphereGeometry args={[1, 16, 16]} />
+      <sphereGeometry args={[1, 12, 12]} />
       <meshStandardMaterial
         color="#ffffff"
-        emissive="#00e5ff"
-        emissiveIntensity={2.5}
+        emissive={filter === 'google' ? '#4285F4' : filter === 'meta' ? '#00C6FF' : '#00E5FF'}
+        emissiveIntensity={isBursting ? 4.0 : 2.5}
         roughness={0.1}
         toneMapped={false}
       />
@@ -196,260 +243,227 @@ const DataPulses = ({ filter }: { filter: PlatformFilter }) => {
   );
 };
 
-// Holographic Node
-const HolographicNode = ({
-  node,
-  active,
-  selected,
-  onClick,
-  onHover
+// Funnel Tier Component
+const FunnelTierMesh = ({
+  stage,
+  isSelected,
+  onClick
 }: {
-  node: NodeData;
-  active: boolean;
-  selected: boolean;
-  onClick: (node: NodeData) => void;
-  onHover: (node: NodeData | null) => void;
+  stage: FunnelStage;
+  isSelected: boolean;
+  onClick: (stage: FunnelStage) => void;
 }) => {
   const ringRef = useRef<THREE.Mesh>(null);
+  const coreRef = useRef<THREE.Mesh>(null);
 
   useFrame((_, delta) => {
     if (ringRef.current) {
-      ringRef.current.rotation.z += delta * 0.8;
-      ringRef.current.rotation.x += delta * 0.4;
+      ringRef.current.rotation.z += delta * 0.6;
     }
   });
 
-  const nodeOpacity = active ? 1 : 0.15;
-
   return (
-    <Float speed={2} rotationIntensity={0.3} floatIntensity={0.4}>
-      <group
-        position={node.position}
+    <group position={[0, stage.yPos, 0]}>
+      {/* Outer Clickable Truncated Cone */}
+      <mesh
+        ref={coreRef}
         onClick={(e) => {
           e.stopPropagation();
-          onClick(node);
+          onClick(stage);
         }}
         onPointerOver={(e) => {
           e.stopPropagation();
           document.body.style.cursor = 'pointer';
-          onHover(node);
         }}
         onPointerOut={() => {
           document.body.style.cursor = 'auto';
-          onHover(null);
         }}
       >
-        {/* Core Sphere */}
-        <Sphere args={[node.platform === 'core' ? 0.45 : 0.32, 32, 32]}>
-          <meshStandardMaterial
-            color={node.color}
-            emissive={node.color}
-            emissiveIntensity={selected ? 2.5 : active ? 1.2 : 0.2}
-            roughness={0.2}
-            metalness={0.8}
-            transparent
-            opacity={nodeOpacity}
-          />
-        </Sphere>
+        <cylinderGeometry
+          args={[stage.radiusTop, stage.radiusBottom, stage.height, 48, 1, true]}
+        />
+        <meshStandardMaterial
+          color={stage.color}
+          emissive={stage.glowColor}
+          emissiveIntensity={isSelected ? 1.8 : 0.35}
+          wireframe={!isSelected}
+          transparent
+          opacity={isSelected ? 0.65 : 0.25}
+          side={THREE.DoubleSide}
+          roughness={0.2}
+          metalness={0.8}
+        />
+      </mesh>
 
-        {/* Orbiting wireframe ring */}
-        <Torus ref={ringRef} args={[node.platform === 'core' ? 0.75 : 0.52, 0.015, 16, 48]}>
-          <meshBasicMaterial
-            color={node.color}
-            wireframe
-            transparent
-            opacity={active ? 0.6 : 0.08}
-          />
-        </Torus>
+      {/* Inner Translucent Frosted Glass Lining */}
+      <mesh>
+        <cylinderGeometry
+          args={[stage.radiusTop * 0.98, stage.radiusBottom * 0.98, stage.height * 0.96, 36, 1, true]}
+        />
+        <meshPhysicalMaterial
+          color={stage.color}
+          transparent
+          opacity={isSelected ? 0.3 : 0.08}
+          roughness={0.1}
+          metalness={0.1}
+          clearcoat={1}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
 
-        {/* Floating Label */}
-        {active && (
-          <Html
-            position={[0, node.platform === 'core' ? 0.7 : 0.55, 0]}
-            center
-            distanceFactor={10}
-            className="pointer-events-none select-none"
-          >
-            <div className={`px-2.5 py-1 rounded-full text-[11px] font-mono tracking-wider whitespace-nowrap shadow-lg backdrop-blur-md border transition-all ${
-              selected
-                ? 'bg-white text-black border-white font-bold scale-110'
-                : 'bg-black/80 text-white/90 border-white/20'
-            }`}>
-              {node.name}
-            </div>
-          </Html>
-        )}
-      </group>
-    </Float>
+      {/* Orbiting Laser Boundary Ring */}
+      <Torus
+        ref={ringRef}
+        args={[stage.radiusTop + 0.15, isSelected ? 0.04 : 0.02, 16, 64]}
+        rotation={[Math.PI / 2, 0, 0]}
+      >
+        <meshBasicMaterial
+          color={isSelected ? '#ffffff' : stage.glowColor}
+          transparent
+          opacity={isSelected ? 0.9 : 0.4}
+        />
+      </Torus>
+
+      {/* Bottom Ring of the Tier */}
+      <Torus
+        args={[stage.radiusBottom + 0.08, 0.015, 16, 48]}
+        rotation={[Math.PI / 2, 0, 0]}
+        position={[0, -stage.height / 2, 0]}
+      >
+        <meshBasicMaterial
+          color={stage.glowColor}
+          transparent
+          opacity={isSelected ? 0.7 : 0.2}
+        />
+      </Torus>
+
+      {/* 3D Floating Stage Label Pin */}
+      <Html
+        position={[stage.radiusTop + 0.6, 0, 0]}
+        center
+        distanceFactor={10}
+        className="pointer-events-none select-none"
+      >
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick(stage);
+          }}
+          className={`pointer-events-auto cursor-pointer transition-all duration-300 flex items-center gap-2 px-3 py-1.5 rounded-full border shadow-xl backdrop-blur-md whitespace-nowrap text-xs font-mono ${
+            isSelected
+              ? 'bg-white text-black border-white font-bold scale-110 shadow-white/30'
+              : 'bg-black/80 text-white/90 border-white/20 hover:border-white/50'
+          }`}
+        >
+          <span
+            className="w-2.5 h-2.5 rounded-full"
+            style={{ backgroundColor: stage.color }}
+          />
+          <span>Stage {stage.id}</span>
+        </div>
+      </Html>
+    </group>
   );
 };
 
-// Center Hub Special Effects
-const CenterHub = ({ filter }: { filter: PlatformFilter }) => {
-  const outerRing1 = useRef<THREE.Mesh>(null);
-  const outerRing2 = useRef<THREE.Mesh>(null);
+// Bottom Laser Beam firing downward from Stage 4
+const BottomLaserBeam = ({ isSelected }: { isSelected: boolean }) => {
+  const beamRef = useRef<THREE.Mesh>(null);
 
   useFrame((_, delta) => {
-    if (outerRing1.current) outerRing1.current.rotation.y += delta * 0.5;
-    if (outerRing2.current) outerRing2.current.rotation.x += delta * 0.35;
+    if (beamRef.current) {
+      beamRef.current.rotation.y += delta * 2;
+    }
   });
 
   return (
-    <group position={[0, 0, 0]}>
-      <Torus ref={outerRing1} args={[1.3, 0.018, 16, 64]}>
+    <group position={[0, -3.8, 0]}>
+      {/* Laser Column */}
+      <mesh ref={beamRef}>
+        <cylinderGeometry args={[0.22, 0.05, 1.8, 16]} />
         <meshBasicMaterial
-          color={filter === 'meta' ? '#00C6FF' : filter === 'google' ? '#FBBC05' : '#34A853'}
+          color="#00E5FF"
           transparent
-          opacity={0.4}
+          opacity={isSelected ? 0.9 : 0.5}
         />
-      </Torus>
-      <Torus ref={outerRing2} args={[1.5, 0.012, 16, 64]}>
+      </mesh>
+
+      {/* Impact Light Disk */}
+      <mesh position={[0, -0.9, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.05, 1.2, 32]} />
         <meshBasicMaterial
-          color={filter === 'meta' ? '#0081FB' : filter === 'google' ? '#4285F4' : '#4285F4'}
+          color="#00E5FF"
           transparent
-          opacity={0.3}
+          opacity={0.35}
+          side={THREE.DoubleSide}
         />
-      </Torus>
+      </mesh>
     </group>
-  );
-};
-
-// Connection Lines between nodes and central hub
-const ConnectingPipes = ({ filter }: { filter: PlatformFilter }) => {
-  const lines = useMemo(() => {
-    return NODES.filter(n => n.platform !== 'core').map(n => {
-      const points = [
-        new THREE.Vector3(...n.position),
-        new THREE.Vector3(0, 0, 0)
-      ];
-      const geometry = new THREE.BufferGeometry().setFromPoints(points);
-      return {
-        id: n.id,
-        geometry,
-        platform: n.platform,
-        color: n.color
-      };
-    });
-  }, []);
-
-  return (
-    <group>
-      {lines.map(line => {
-        const isVisible = filter === 'all' || filter === line.platform;
-        return (
-          <line key={line.id} geometry={line.geometry}>
-            <lineBasicMaterial
-              color={line.color}
-              transparent
-              opacity={isVisible ? 0.25 : 0.03}
-              linewidth={1}
-            />
-          </line>
-        );
-      })}
-    </group>
-  );
-};
-
-// Background Ambience Particles
-const AmbientGrid = () => {
-  const particlesCount = 200;
-  const [positions] = useMemo(() => {
-    const pos = new Float32Array(particlesCount * 3);
-    for (let i = 0; i < particlesCount * 3; i += 3) {
-      pos[i] = (Math.random() - 0.5) * 24;
-      pos[i + 1] = (Math.random() - 0.5) * 16;
-      pos[i + 2] = (Math.random() - 0.5) * 16;
-    }
-    return [pos];
-  }, []);
-
-  return (
-    <points>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.06}
-        color="#88aaff"
-        transparent
-        opacity={0.35}
-        sizeAttenuation
-      />
-    </points>
   );
 };
 
 interface Ads3DSceneProps {
+  activeStage: FunnelStage;
+  onSelectStage: (stage: FunnelStage) => void;
+  isBursting: boolean;
   filter: PlatformFilter;
-  selectedNode: NodeData | null;
-  onSelectNode: (node: NodeData | null) => void;
 }
 
 export const Ads3DScene: React.FC<Ads3DSceneProps> = ({
-  filter,
-  selectedNode,
-  onSelectNode
+  activeStage,
+  onSelectStage,
+  isBursting,
+  filter
 }) => {
-  const [hoveredNode, setHoveredNode] = useState<NodeData | null>(null);
-
   return (
     <div className="w-full h-full relative cursor-grab active:cursor-grabbing">
       <Canvas
-        camera={{ position: [0, 0, 11], fov: 45 }}
+        camera={{ position: [0, 0.5, 9.5], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
       >
         <ambientLight intensity={0.9} />
-        <pointLight position={[10, 10, 10]} intensity={1.5} color="#4285F4" />
-        <pointLight position={[-10, -10, -10]} intensity={1.5} color="#0081FB" />
-        <directionalLight position={[0, 5, 5]} intensity={1.2} />
+        <directionalLight position={[5, 8, 5]} intensity={1.5} color="#ffffff" />
+        <pointLight position={[-6, 4, -4]} intensity={1.2} color="#4285F4" />
+        <pointLight position={[6, -4, 4]} intensity={1.2} color="#00C6FF" />
 
-        <AmbientGrid />
-        <CenterHub filter={filter} />
-        <ConnectingPipes filter={filter} />
-        <DataPulses filter={filter} />
+        {/* Funnel Tiers */}
+        {FUNNEL_STAGES.map((stage) => (
+          <FunnelTierMesh
+            key={stage.id}
+            stage={stage}
+            isSelected={activeStage.id === stage.id}
+            onClick={onSelectStage}
+          />
+        ))}
 
-        {/* Nodes */}
-        {NODES.map(node => {
-          const isPlatformActive = filter === 'all' || node.platform === 'core' || node.platform === filter;
-          const isSelected = selectedNode?.id === node.id;
+        {/* Bottom Attribution Laser */}
+        <BottomLaserBeam isSelected={activeStage.id === 4} />
 
-          return (
-            <HolographicNode
-              key={node.id}
-              node={node}
-              active={isPlatformActive}
-              selected={isSelected}
-              onClick={(clicked) => {
-                onSelectNode(selectedNode?.id === clicked.id ? null : clicked);
-              }}
-              onHover={setHoveredNode}
-            />
-          );
-        })}
+        {/* Cascading Particles */}
+        <FunnelParticles
+          activeStageId={activeStage.id}
+          isBursting={isBursting}
+          filter={filter}
+        />
 
         <OrbitControls
           enableZoom={true}
           minDistance={6}
-          maxDistance={18}
+          maxDistance={15}
           enablePan={false}
-          autoRotate={!selectedNode && !hoveredNode}
-          autoRotateSpeed={0.8}
+          autoRotate={false}
           dampingFactor={0.05}
         />
       </Canvas>
 
-      {/* Floating Instructions Banner */}
+      {/* Floating HUD Helper */}
       <div className="absolute top-4 left-4 z-10 pointer-events-none flex flex-col gap-1">
-        <span className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70 bg-bg-primary/80 backdrop-blur px-3 py-1.5 rounded-lg border border-white/10 inline-flex items-center gap-2">
+        <span className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/80 bg-bg-primary/80 backdrop-blur px-3 py-1.5 rounded-lg border border-white/10 inline-flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-brand-green animate-ping" />
-          Interactive 3D Pipeline Matrix
+          Interactive 3D Visual Conversion Funnel
         </span>
         <span className="text-[10px] font-mono text-text-secondary/50 ml-1">
-          Drag to rotate • Click nodes to inspect parameters
+          Click any funnel tier or use step controls below • Drag to rotate
         </span>
       </div>
     </div>
