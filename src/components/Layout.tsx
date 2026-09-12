@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'motion/react';
 import LanyardSplash from './LanyardSplash';
 import { Navbar } from './Navbar';
+import PokemonCursor from './PokemonCursor';
 import { trackEvent } from '../lib/analytics';
 
 interface LayoutProps {
@@ -75,6 +76,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         </div>
       )}
       <ParallaxBackground />
+      <PokemonCursor />
       <Navbar theme={theme} toggleTheme={toggleTheme} />
       <main className="relative z-10">
         {children}

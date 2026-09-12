@@ -67,3 +67,17 @@
   background: linear-gradient(to right, transparent, var(--color-brand-blue), transparent);
   animation: scan 4s linear infinite;
 }
+
+@media (pointer: fine) {
+  body.custom-cursor-active,
+  body.custom-cursor-active a,
+  body.custom-cursor-active button,
+  body.custom-cursor-active input,
+  body.custom-cursor-active textarea,
+  body.custom-cursor-active select,
+  body.custom-cursor-active [role="button"],
+  body.custom-cursor-active .cursor-pointer {
+    cursor: none !important;
+  }
+}
+
