@@ -99,6 +99,13 @@ const EXPERIENCE = [
 
 const PROJECTS = [
   {
+    title: 'Google & Meta Ads 3D Architecture',
+    description: 'Interactive 3D measurement pipeline demonstrating Server-Side GTM, Enhanced Conversions, Meta CAPI, and Floodlight SA360 tag engineering.',
+    impact: 'Recovers up to 34% lost conversions post-iOS 14 & Safari ITP with 9.2+ EMQ score.',
+    tags: ['Google Ads', 'Meta CAPI', 'Three.js 3D', 'sGTM'],
+    link: '#ads-showcase'
+  },
+  {
     title: 'Task Tracker',
     description: 'A comprehensive task management application built for high-performance tracking and productivity.',
     impact: 'Streamlined daily operations and improved task completion visibility.',
@@ -319,7 +326,7 @@ export default function App() {
   useEffect(() => {
     // Handle scrolling to hash on mount (useful for cross-page navigation)
     const hash = window.location.hash;
-    if (hash && hash !== '#blog' && hash !== '#gtm-consent-template') {
+    if (hash && hash !== '#blog' && hash !== '#gtm-consent-template' && hash !== '#ads-showcase') {
       const id = hash.replace('#', '');
       const element = document.getElementById(id);
       if (element) {

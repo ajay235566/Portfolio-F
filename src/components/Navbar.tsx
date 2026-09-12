@@ -19,7 +19,15 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = ['About', 'Experience', 'Skills', 'Projects', 'Freelance', 'Blog'];
+  const navItems = [
+    { name: 'About', href: '#about' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Ads Architecture', href: '#ads-showcase', isSpecial: true },
+    { name: 'Freelance', href: '#freelance' },
+    { name: 'Blog', href: '#blog' }
+  ];
 
   return (
     <nav className={cn(
@@ -37,14 +45,20 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           AJAY<span className="text-brand-blue">.</span>KUMAR
         </motion.div>
  
-        <div className="hidden md:flex gap-8 text-sm font-medium text-text-secondary">
+        <div className="hidden md:flex gap-7 text-sm font-medium text-text-secondary items-center">
           {navItems.map((item) => (
             <a
-              key={item}
-              href={item === 'Blog' ? '#blog' : `#${item.toLowerCase()}`}
-              className="hover:text-text-primary transition-colors"
+              key={item.name}
+              href={item.href}
+              className={cn(
+                "transition-colors",
+                item.isSpecial
+                  ? "text-brand-blue hover:text-white px-3 py-1 rounded-full border border-brand-blue/30 bg-brand-blue/10 flex items-center gap-1.5 font-semibold"
+                  : "hover:text-text-primary"
+              )}
             >
-              {item}
+              {item.isSpecial && <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse" />}
+              {item.name}
             </a>
           ))}
         </div>
