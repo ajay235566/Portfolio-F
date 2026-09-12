@@ -23,7 +23,10 @@ import {
   User,
   MessageSquare,
   Box,
-  ShieldCheck
+  ShieldCheck,
+  Snowflake,
+  Database,
+  Layers
 } from 'lucide-react';
 import { FramerVector } from './components/FramerVector';
 import { SplashScreen } from './components/SplashScreen';
@@ -35,7 +38,12 @@ import Hero from "./components/Hero";
 
 const SKILLS = [
   { name: 'Google Analytics (GA4)', category: 'Analytics', icon: BarChart3, color: 'text-brand-yellow' },
-  { name: 'Google Tag Manager', category: 'Tracking', icon: Zap, color: 'text-brand-blue' },
+  { name: 'Google Tag Manager 360', category: 'Tracking', icon: Zap, color: 'text-brand-blue' },
+  { name: 'Snowplow Analytics', category: 'Event Streaming', icon: Snowflake, color: 'text-brand-blue' },
+  { name: 'Databricks', category: 'Data Lakehouse', icon: Database, color: 'text-brand-red' },
+  { name: 'SQL', category: 'Data Querying & Extraction', icon: Terminal, color: 'text-brand-yellow' },
+  { name: 'Schema Design', category: 'Data Architecture', icon: Layers, color: 'text-white' },
+  { name: 'Avo', category: 'Data Governance & QA', icon: ShieldCheck, color: 'text-brand-green' },
   { name: 'Google Looker Studio', category: 'Visualization', icon: BarChart3, color: 'text-brand-green' },
   { name: 'Consent Mode & Enhanced Tracking', category: 'Compliance', icon: CheckCircle2, color: 'text-brand-blue' },
   { name: 'Offline Conversions & Customer Match', category: 'Advanced Ads', icon: Globe, color: 'text-brand-red' },
