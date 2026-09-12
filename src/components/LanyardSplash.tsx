@@ -38,13 +38,25 @@ export default function LanyardSplash({
   transparent = true,
   onComplete
 }: LanyardProps) {
-  const [isMobile, setIsMobile] = useState<boolean>(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 1024 || window.matchMedia('(max-width: 1023px)').matches;
+    }
+    return false;
+  });
 
   useEffect(() => {
-    const handleResize = (): void => setIsMobile(window.innerWidth < 768);
+    const handleResize = (): void => {
+      setIsMobile(window.innerWidth < 1024 || window.matchMedia('(max-width: 1023px)').matches);
+    };
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <div className="lanyard-wrapper fixed inset-0 z-[100] bg-[#050505] cursor-grab active:cursor-grabbing flex flex-col items-center justify-center">

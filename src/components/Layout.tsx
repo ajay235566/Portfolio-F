@@ -42,28 +42,38 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const [showSplash, setShowSplash] = useState(() => {
     if (typeof window !== 'undefined') {
+      const isMobile = window.innerWidth < 1024 || window.matchMedia('(max-width: 1023px)').matches;
+      if (isMobile) return false;
       return !sessionStorage.getItem('splash_seen');
     }
-    return true;
+    return false;
   });
 
-  // Splash screen is now interaction-driven. User must drag the lanyard to enter.
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1024 || window.matchMedia('(max-width: 1023px)').matches) {
+        setShowSplash(false);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-  if (showSplash) {
-    return (
-      <div className="fixed inset-0 w-[100vw] h-[100vh] z-[999999] bg-[#050505] overflow-hidden m-0 p-0">
-        <LanyardSplash 
-          onComplete={() => {
-            setShowSplash(false);
-            sessionStorage.setItem('splash_seen', 'true');
-          }} 
-        />
-      </div>
-    );
-  }
+  // Splash screen is now interaction-driven. User must drag the lanyard to enter on desktop.
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-bg-primary text-text-primary transition-colors duration-300">
+      {showSplash && (
+        <div className="hidden lg:block fixed inset-0 w-[100vw] h-[100vh] z-[999999] bg-[#050505] overflow-hidden m-0 p-0">
+          <LanyardSplash 
+            onComplete={() => {
+              setShowSplash(false);
+              sessionStorage.setItem('splash_seen', 'true');
+            }} 
+          />
+        </div>
+      )}
       <ParallaxBackground />
       <Navbar theme={theme} toggleTheme={toggleTheme} />
       <main className="relative z-10">

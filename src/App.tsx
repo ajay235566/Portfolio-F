@@ -300,6 +300,22 @@ const ContactForm = () => {
 };
 
 export default function App() {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 1024 || window.matchMedia('(max-width: 1023px)').matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024 || window.matchMedia('(max-width: 1023px)').matches);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   useEffect(() => {
     // Handle scrolling to hash on mount (useful for cross-page navigation)
     const hash = window.location.hash;
@@ -382,16 +398,18 @@ export default function App() {
             </div>
 
             {/* Right Side → 3D Lanyard Hero */}
-            <div className="lg:col-span-5 relative">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2, duration: 0.8 }}
-                className="w-full relative h-[650px] translate-y-[50px]"
-              >
-                <Hero />
-              </motion.div>
-            </div>
+            {!isMobile && (
+              <div className="hidden lg:block lg:col-span-5 relative">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2, duration: 0.8 }}
+                  className="w-full relative h-[650px] translate-y-[50px]"
+                >
+                  <Hero />
+                </motion.div>
+              </div>
+            )}
 
           </div>
         </div>

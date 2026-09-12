@@ -8,3 +8,9 @@
   transform: scale(1);
   transform-origin: center;
 }
+
+@media (max-width: 1023px) {
+  .lanyard-wrapper {
+    display: none !important;
+  }
+}
