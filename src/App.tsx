@@ -60,19 +60,6 @@ const CMS_EXPERTISE = [
 
 const EXPERIENCE = [
   {
-    company: 'Conde Nast',
-    role: 'Analyst, Technical Analytics & Measurement',
-    description: 'Orchestrated enterprise behavioral data infrastructure, Snowplow streaming pipelines, and custom data layer architectures across global digital brands, integrating web and mobile app telemetry directly into Databricks lakehouse.',
-    highlights: [
-      'Databricks & SQL Data Extraction: Extracted, queried, and validated large-scale clickstream datasets from Databricks using advanced SQL, performing deep data integrity audits, user journey reconciliations, and ad-hoc analysis.',
-      'Pipeline Ingestion & Collector Setup: Managed multi-brand event streaming pipelines, configuring and provisioning new Snowplow collectors and endpoints for brand sites and new client properties.',
-      'Pipeline Troubleshooting & Event Recovery: Monitored real-time ingestion streams, triaged and debugged failed event queues, investigated schema validation errors, and re-triggered pipeline backfills to maintain zero data loss.',
-      'Web & App Schema Design: Architected robust event tracking schemas (Snowplow/JSON) for both web and mobile apps, establishing standardized event taxonomies for content consumption, subscriptions, and interactions.',
-      'Cross-Functional Pre- & Post-Launch QA: Collaborated closely with engineering, product, and QA teams across sprint cycles to review technical specs, validate schema designs pre-launch, and execute post-launch production audits.',
-      'Data Layer & Consent Governance: Designed structured, event-driven data layers for engineering feature launches and governed third-party tag deployments (Meta, TikTok, Rakuten, Parsely) under strict privacy frameworks.'
-    ]
-  },
-  {
     company: 'Google Operation Center',
     role: 'Digital Media Senior Associate',
     description: 'Managed the implementation and troubleshooting of Floodlight tags, container logic audits within GTM, and cross-engine reporting in SA360.',
